@@ -9,7 +9,7 @@ lib/provided/
 lib/runtime/
 lib/standalone/
 lib/test/
-/lib/
+**/lib/
 /lib/*
 
 # IDEA ignores
@@ -21,7 +21,7 @@ lib/test/
 .idea/**/dictionaries
 .idea/**/shelf
 /.idea
-/.idea/
+**/.idea/
 /.idea/**
 
 # AWS User-specific
@@ -59,4 +59,4 @@ atlassian-ide-plugin.xml
 
 # Editor-based Rest Client
 .idea/httpRequests
-/.vscode/
+**/.vscode/
