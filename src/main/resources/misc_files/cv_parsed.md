@@ -1,96 +1,46 @@
-# Резюме: Георгий Щенников
+# Georgii Shchennikov
 
-## Контактная информация
-* **Имя:** Георгий Щенников
-* **Место проживания:** Ереван, Армения
-* **Email:** george.sh.tech+cv@gmail.com
-* **LinkedIn:** linkedin.com/in/george-sv
-* **Telegram:** t.me/morkou
-* **Телефон:** +374091231379
-* **Виза:** Требуется спонсорство визы
+Armenia, Yerevan george.sh.tech+cv@gmail.com | linkedin.com/in/george-sv | t.me/morkou +374091231379 | Visa sponsorship required
 
-## Общая информация
-* Опыт работы в сфере разработки программного обеспечения: 5+ лет, включая работу с финансовыми системами с нуля и с существующей кодовой базой.
-* Участвовал в процессе переноса устаревших систем на микросервисы.
-* Бэкенд-разработчик (Java, Kotlin) с опытом работы в банковских системах, предоставляющих платежи, переводы и функции учета.
-* Создал плагин Intellij Idea: BroBrowser с использованием Kotlin + Swing.
+## Summary
+5+ years in software development providing services for financial systems both from scratch and diving into an existing codebase. Took part in the process of transferring the legacy systems to microservices. I am a backend software engineer (Java, Kotlin) with experience in banking systems providing payments, transfers and accounting features.
 
-## Навыки
+## Skills
+* **Languages:** Java, Kotlin, SQL, PL/SQL
+* **Methodology:** Scrum, Kanban
+* **Technologies:** Spring Boot, Maven, Gradle, JUnit, Kafka, Docker, OpenShift, Kubernetes, Selenium, Oracle AQ
+* **Databases:** IBM DB2, PostgreSQL, Oracle DB
+* **IDE:** IntelliJ IDEA, Eclipse, Dbeaver, IBM i Access Client Solutions
+* **Tools:** Git, Jira/Conf., OpenLens, OpenSearch
+* **Project:** Create Intellij Idea plugin: BroBrowser using Kotlin + Swing
 
-### Языки
-* Java
-* Kotlin
-* SQL
-* PL/SQL
+## Work Experience
+### X Software Engineer, Raiffeisen bank, Moscow, Russia (remote from Armenia)
+**Apr. 2023 - Present**
+* **Technologies:** Java, Spring, IBM DB2, Gradle, Git
+* **Duties:**
+  * Providing interaction between western accounting systems and the local one. Team of 15.
+  * Migrating features to microservice architecture.
+  * Support for a mission-critical financial reporting platform.
 
-### Методологии
-* Scrum
-* Kanban
+### Software Engineer, Sberbank, Saint-Petersburg, Russia
+**Mar. 2019 - Jan. 2023**
+* **Technologies:** Java, Kotlin, Xslt, Spring, Maven, Git
+* **Duties:**
+  * Providing payments and information about fines and taxes on interaction with government APIs, team of 9.
+  * Developed new functionality in the legacy system that provides subscriptions on fines information for bank customers in the external government system.
+  * Split a monolithic system into microservices using the inner proprietary message-driven framework (Akka-like).
+  * Developed one of the subsystems using OpenShift services for new external government API, both from scratch and forking existing service.
 
-### Технологии
-* Spring Boot
-* Maven
-* Gradle
-* JUnit
-* Kafka
-* Docker
-* OpenShift
-* Kubernetes
-* Selenium
-* Oracle AQ
+### Optics design engineer, Branch of Kometa corp., Saint-Petersburg, Russia
+**Sept. 2012 - Sept. 2018**
+* **Duties:** Research and development, the mechanical design of optical devices for scientific and space applications, leading a group of up to 3 colleagues.
 
-### Базы данных
-* IBM DB2
-* PostgreSQL
-* Oracle DB
+## Education
+### Advanced training courses on the topic "Software developer using Java EE technologies"
+**Innopolis University**
+**2019**
 
-### IDE
-* IntelliJ IDEA
-* Eclipse
-* Dbeaver
-* IBM i Access Client Solutions
-
-### Инструменты
-* Git
-* Jira/Conf.
-* OpenLens
-* OpenSearch
-
-## Опыт работы
-
-### Software Engineer, Raiffeisen bank, Москва, Россия (удаленно из Армении)
-* **Период работы:** Апрель 2023 г. - Настоящее время
-* **Технологии:** Java, Spring, IBM DB2, Gradle, Git
-* **Обязанности:**
-    * Обеспечение взаимодействия между западными и локальными системами учета.
-    * Миграция функций на микросервисную архитектуру.
-    * Поддержка критически важной платформы финансовой отчетности.
-* **Размер команды:** 15 человек.
-
-### Software Engineer, Сбербанк, Санкт-Петербург, Россия
-* **Период работы:** Март 2019 г. - Январь 2023 г.
-* **Технологии:** Java, Kotlin, Xslt, Spring, Maven, Git
-* **Обязанности:**
-    * Обеспечение платежей и информации о штрафах и налогах при взаимодействии с государственными API.
-    * Разработка нового функционала в унаследованной системе, предоставляющей подписки на информацию о штрафах для клиентов банка во внешней государственной системе.
-    * Разделение монолитной системы на микросервисы с использованием внутреннего проприетарного message-driven фреймворка (похожего на Akka).
-    * Разработка одной из подсистем с использованием сервисов OpenShift для нового внешнего государственного API, как с нуля, так и путем форка существующего сервиса.
-* **Размер команды:** 9 человек.
-
-### Optics design engineer, Филиал корпорации «Комета», Санкт-Петербург, Россия
-* **Период работы:** Сентябрь 2012 г. - Сентябрь 2018 г.
-* **Обязанности:**
-    * Исследования и разработки.
-    * Механическое проектирование оптических устройств для научных и космических применений.
-    * Руководство группой до 3-х коллег.
-
-## Образование
-
-### Курсы повышения квалификации
-* **Тема:** «Разработчик программного обеспечения с использованием технологий Java EE»
-* **Учебное заведение:** Университет Иннополис
-* **Год окончания:** 2019
-
-### Магистр оптотехники
-* **Учебное заведение:** Национальный исследовательский университет информационных технологий, механики и оптики (ИТМО), факультет прикладной и компьютерной оптики
-* **Период обучения:** 2006-2012
+### Master's Degree in Optotechnics
+**The National Research University of Information Technologies, Mechanics and Optics (ITMO University), Department of Applied and Computer Optics**
+**2006-2012**
