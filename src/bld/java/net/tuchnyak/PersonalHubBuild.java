@@ -14,9 +14,11 @@ public class PersonalHubBuild extends WebProject {
         name = "personal-hub";
         mainClass = "net.tuchnyak.PersonalHubSite";
         uberJarMainClass = "net.tuchnyak.PersonalHubSiteUber";
-        version = version(0,1,0);
+        version = version(0,0,1);
 
         downloadSources = true;
+        autoDownloadPurge = true;
+
         repositories = List.of(MAVEN_CENTRAL, RIFE2_RELEASES);
         scope(compile)
             .include(dependency("com.uwyn.rife2", "rife2", version(1,9,1)));
