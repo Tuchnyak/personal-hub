@@ -1,6 +1,8 @@
+@import url('fonts.css');
+
 :root {
     /* fonts */
-    --main-font: sans-serif;
+    --main-font: 'Comfortaa', sans-serif;
 
     /* font sizes */
     --main-font-size: 18px;
@@ -12,10 +14,11 @@
     /* margins and padding */
     --content-padding: 2em;
 }
+
 body {
     background: var(--main-background-color);
     font-family: var(--main-font);
-    font-style: var(--main-font-size);
+    font-style: var(--main-font-size); /* Убираем, т.к. это неверное свойство */
     color: var(--main-text-color);
     padding: var(--content-padding);
 }
