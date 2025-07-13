@@ -21,7 +21,8 @@ public class PersonalHubBuild extends WebProject {
 
         repositories = List.of(MAVEN_CENTRAL, RIFE2_RELEASES);
         scope(compile)
-            .include(dependency("com.uwyn.rife2", "rife2", version(1,9,1)));
+            .include(dependency("com.uwyn.rife2", "rife2", version(1,9,1)))
+            .include(dependency("org.hsqldb", "hsqldb", version(2,7,4)));
         scope(test)
             .include(dependency("org.jsoup", "jsoup", version(1,18,3)))
             .include(dependency("org.junit.jupiter", "junit-jupiter", version(5,11,4)))
