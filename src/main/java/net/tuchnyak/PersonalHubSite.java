@@ -4,10 +4,8 @@ import rife.engine.*;
 
 public class PersonalHubSite extends Site {
     public void setup() {
-        get("/cv", PathInfoHandling.NONE, c -> c.print(c.template("cv")));
-        var hello = get("/hello", PathInfoHandling.NONE, c -> c.print(c.template("hello")));
-
-        get("/", c -> c.redirect(hello));
+        var cv = get("/cv", PathInfoHandling.NONE, c -> c.print(c.template("cv")));
+        get("/", c -> c.redirect(cv));
     }
 
     public static void main(String[] args) {
