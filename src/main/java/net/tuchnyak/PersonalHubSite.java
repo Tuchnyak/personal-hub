@@ -1,9 +1,14 @@
 package net.tuchnyak;
 
+import net.tuchnyak.db.DbInitializer;
 import net.tuchnyak.util.Logging;
 import rife.engine.*;
 
 public class PersonalHubSite extends Site implements Logging {
+
+    public PersonalHubSite() {
+        new DbInitializer().initialize();
+    }
 
     public void setup() {
         var cv = get("/cv", PathInfoHandling.NONE, c -> c.print(c.template("cv")));

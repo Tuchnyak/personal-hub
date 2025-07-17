@@ -31,7 +31,6 @@ public class PersonalHubBuild extends WebProject {
         scope(standalone)
             .include(dependency("org.eclipse.jetty.ee10", "jetty-ee10", version(12,0,16)))
             .include(dependency("org.eclipse.jetty.ee10", "jetty-ee10-servlet", version(12,0,16)))
-//            .include(dependency("ch.qos.logback", "logback-classic", version(1,5,12)));
             .include(dependency("org.slf4j", "slf4j-simple", version(2,0,16)));
 
         precompileOperation()
