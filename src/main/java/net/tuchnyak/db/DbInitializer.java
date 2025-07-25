@@ -1,6 +1,8 @@
 package net.tuchnyak.db;
 
+import net.tuchnyak.util.FileReaderUtil;
 import net.tuchnyak.util.Logging;
+import net.tuchnyak.util.ScriptRunner;
 import rife.database.Datasource;
 import rife.database.DbQueryManager;
 import rife.resources.ResourceFinder;
@@ -38,17 +40,15 @@ public class DbInitializer implements Logging {
 
         var isDbExists = Arrays.stream(array).anyMatch(file -> file.getName().contains(DB_NAME));
         if (!isDbExists) {
-            getLogger().info(">>> Database files not found in directory: {}\n>>> Creating new database...", dbDirFile.getAbsolutePath());
+            getLogger().info(">>> Database files not found in directory: {}\n>>> Creating new database...",
+                    dbDirFile.getAbsolutePath());
             Datasource dataSource = DataSourceManager.getInstance().getDataSource();
             try {
                 ResourceFinder resourceFinder = new ResourceFinderDirectories(new File(SRC_MAIN_RESOURCES_DB));
                 URL resource = resourceFinder.getResource(SCHEMA_SQL);
-                var sqlScript = new String(Files.readAllBytes(Paths.get(resource.toURI())));
+                var sqlScript = new FileReaderUtil().readFilePathToString(Paths.get(resource.toURI()));
                 DbQueryManager queryManager = new DbQueryManager(dataSource);
-                Arrays.stream(sqlScript.split(";"))
-                        .map(String::trim)
-                        .filter(s -> !s.isBlank())
-                        .forEach(queryManager::executeUpdate);
+                new ScriptRunner(queryManager).executeUpdate(sqlScript);
                 getLogger().info(">>> Database created successfully.");
             } catch (Exception e) {
                 getLogger().error(">>> Error creating database: {}", e.getMessage());
