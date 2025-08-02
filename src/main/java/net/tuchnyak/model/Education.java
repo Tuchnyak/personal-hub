@@ -2,8 +2,8 @@ package net.tuchnyak.model;
 
 public record Education(
         int id,
-        String institution_name,
+        String institutionName,
         String degree,
         String description,
-        String graduation_year) {
+        String graduationYear) {
 }

@@ -7,13 +7,14 @@ import net.tuchnyak.model.ContactInfo;
 import net.tuchnyak.model.Education;
 import net.tuchnyak.model.Skill;
 import net.tuchnyak.model.WorkExperience;
+import net.tuchnyak.util.Logging;
 import org.hsqldb.lib.StringUtil;
 import rife.database.Datasource;
 import rife.database.DbQueryManager;
 import rife.database.exceptions.DatabaseException;
 import rife.database.queries.Select;
 
-public class CvRepositoryImpl implements CvRepository {
+public class CvRepositoryImpl implements CvRepository, Logging {
 
     private final Datasource datasource;
     private final DbQueryManager dbQueryManager;
@@ -29,6 +30,7 @@ public class CvRepositoryImpl implements CvRepository {
 
             return dbQueryManager.executeFetchAllBeans(getSelect("contact_info", "sort_position"), ContactInfo.class);
         } catch (DatabaseException exception) {
+            getLogger().error("Error while fetching contact info", exception);
            return Collections.emptyList();
         }
     }
@@ -39,6 +41,7 @@ public class CvRepositoryImpl implements CvRepository {
 
             return dbQueryManager.executeFetchAllBeans(getSelect("skills", "sort_position"), Skill.class);
         } catch (DatabaseException exception) {
+            getLogger().error("Error while fetching skills", exception);
             return Collections.emptyList();
         }
     }
@@ -49,6 +52,7 @@ public class CvRepositoryImpl implements CvRepository {
 
             return dbQueryManager.executeFetchAllBeans(getSelect("work_experience", "dat"), WorkExperience.class);
         } catch (DatabaseException exception) {
+            getLogger().error("Error while fetching work experience", exception);
             return Collections.emptyList();
         }
     }
@@ -59,6 +63,7 @@ public class CvRepositoryImpl implements CvRepository {
 
             return dbQueryManager.executeFetchAllBeans(getSelect("education", "graduation_year"), Education.class);
         } catch (DatabaseException exception) {
+            getLogger().error("Error while fetching education", exception);
             return Collections.emptyList();
         }
     }

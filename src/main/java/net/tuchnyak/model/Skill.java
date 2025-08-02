@@ -2,7 +2,7 @@ package net.tuchnyak.model;
 
 public record Skill(
         int id,
-        int sort_position,
+        int sortPosition,
         String category,
         String list) {
 }
