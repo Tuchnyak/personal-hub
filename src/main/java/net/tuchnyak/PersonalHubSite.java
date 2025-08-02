@@ -20,7 +20,6 @@ public class PersonalHubSite extends Site implements Logging {
     }
 
     public void setup() {
-//        var cv = get("/cv", PathInfoHandling.NONE, c -> c.print(c.template("cv")));
         var cv = get("/cv", PathInfoHandling.NONE, () -> new CvElement(cvRepository));
         get("/", c -> c.redirect(cv));
 
