@@ -58,6 +58,20 @@ li {
     margin-bottom: 5px;
 }
 
+li.work_experience {
+    position: relative;
+    padding-left: 1.2em; /* Отступ для точки */
+    margin-bottom: 5px;
+}
+
+li.work_experience::before {
+    content: " - ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: black; /* Цвет точки */
+}
+
 a {
     color: #0077cc;
     text-decoration: none;

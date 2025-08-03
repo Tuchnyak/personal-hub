@@ -28,7 +28,7 @@ public class CvRepositoryImpl implements CvRepository, Logging {
     public List<ContactInfo> getContactInfoList() {
         try {
 
-            return dbQueryManager.executeFetchAllBeans(getSelect("contact_info", "sort_position"), ContactInfo.class);
+            return dbQueryManager.executeFetchAllBeans(getSelect("cv.contact_info", "sort_position"), ContactInfo.class);
         } catch (DatabaseException exception) {
             getLogger().error("Error while fetching contact info", exception);
            return Collections.emptyList();
@@ -39,7 +39,7 @@ public class CvRepositoryImpl implements CvRepository, Logging {
     public List<Skill> getSkillList() {
         try {
 
-            return dbQueryManager.executeFetchAllBeans(getSelect("skills", "sort_position"), Skill.class);
+            return dbQueryManager.executeFetchAllBeans(getSelect("cv.skills", "sort_position"), Skill.class);
         } catch (DatabaseException exception) {
             getLogger().error("Error while fetching skills", exception);
             return Collections.emptyList();
@@ -50,7 +50,7 @@ public class CvRepositoryImpl implements CvRepository, Logging {
     public List<WorkExperience> getWorkExperienceList() {
         try {
 
-            return dbQueryManager.executeFetchAllBeans(getSelect("work_experience", "dat"), WorkExperience.class);
+            return dbQueryManager.executeFetchAllBeans(getSelect("cv.work_experience", "dat"), WorkExperience.class);
         } catch (DatabaseException exception) {
             getLogger().error("Error while fetching work experience", exception);
             return Collections.emptyList();
@@ -61,7 +61,7 @@ public class CvRepositoryImpl implements CvRepository, Logging {
     public List<Education> getEducationList() {
         try {
 
-            return dbQueryManager.executeFetchAllBeans(getSelect("education", "graduation_year"), Education.class);
+            return dbQueryManager.executeFetchAllBeans(getSelect("cv.education", "graduation_year"), Education.class);
         } catch (DatabaseException exception) {
             getLogger().error("Error while fetching education", exception);
             return Collections.emptyList();

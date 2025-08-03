@@ -16,84 +16,48 @@
     <section>
         <h2>Contact Information</h2>
         <ul>
-            <li><strong>Location:</strong> Yerevan, Armenia</li>
-            <li><strong>Email:</strong> <a href="mailto:george.sh.tech+cv@gmail.com">george.sh.tech+cv@gmail.com</a></li>
-            <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/george-sv">linkedin.com/in/george-sv</a></li>
-            <li><strong>Telegram:</strong> <a href="https://t.me/morkou">t.me/morkou</a></li>
-            <li><strong>Phone:</strong> +374091231379</li>
-            <li><strong>Visa:</strong> Sponsorship Required</li>
+            <!--v contact_info/--><!--b contact_info-->
+            <li><strong>{{v property/}}:</strong> {{v value/}}</li>
+            <!--/b-->
         </ul>
     </section>
 
     <section>
         <h2>Summary</h2>
-        <p>6+ years in software development providing services for financial systems both from scratch and diving into
-            an existing codebase. Took part in the process of transferring the legacy systems to microservices. I am a
-            backend software engineer (Java, Kotlin) with experience in banking systems providing payments, transfers
-            and accounting features.</p>
+        <p><!--v summary--> Backend Java & Kotlin Software Engineer with 6+ years of experience in designing,
+            developing, robust banking applications.<!--/v--></p>
     </section>
 
     <section>
         <h2>Skills</h2>
         <ul>
-            <li><strong>Languages:</strong> Java, Kotlin, SQL, PL/SQL</li>
-            <li><strong>Methodology:</strong> Scrum, Kanban</li>
-            <li><strong>Technologies:</strong> Spring Boot, Maven, Gradle, JUnit, Kafka, Docker, OpenShift, Kubernetes,
-                Selenium, Oracle AQ
-            </li>
-            <li><strong>Databases:</strong> IBM DB2, PostgreSQL, Oracle DB</li>
-            <li><strong>IDE:</strong> IntelliJ IDEA, Eclipse, Dbeaver, IBM i Access Client Solutions</li>
-            <li><strong>Tools:</strong> Git, Jira/Conf., OpenLens, OpenSearch</li>
-            <li><strong>Project:</strong> Create Intellij Idea plugin: <a href="https://plugins.jetbrains.com/author/8a754438-ca2b-4244-b89c-ce52b188c70d">BroBrowser</a> using Kotlin + Swing</li>
+            <!--v skills/--><!--b skills-->
+            <li><strong>{{v category/}}:</strong> {{v list/}}</li>
+            <!--/b-->
         </ul>
     </section>
 
     <section>
         <h2>Work Experience</h2>
-        <h3>Software Engineer, Raiffeisen bank, Moscow, Russia (remote from Armenia)</h3>
-        <p><em>Apr. 2023 - Present</em></p>
-        <p><strong>Technologies:</strong> Java, Spring, IBM DB2, Gradle, Git, Python</p>
+        <!--v work_experience/--><!--b work_experience-->
+        <h3>{{v position/}}, {{v company_name/}}, {{v location/}}</h3>
+        <p><em>{{v dat/}} - {{v datto/}}</em></p>
+        <p><strong>Technologies:</strong> {{v tech_list/}}</p>
         <ul>
-            <li>Providing interaction between western accounting systems and the local one. Team of 15.</li>
-            <li>Migrating features to microservice architecture.</li>
-            <li>Support for a mission-critical financial reporting platform.</li>
+            {{v description_list/}}{{b description_list}}
+            <li class="work_experience">{{v description_line/}}</li>
+            {{/b}}
         </ul>
-
-        <h3>Software Engineer, Sberbank, Saint-Petersburg, Russia</h3>
-        <p><em>Mar. 2019 - Jan. 2023</em></p>
-        <p><strong>Technologies:</strong> Java, Kotlin, Xslt, Spring, Maven, Git</p>
-        <ul>
-            <li>Providing payments and information about fines and taxes on interaction with government APIs, team of
-                9.
-            </li>
-            <li>Developed new functionality in the legacy system that provides subscriptions on fines information for
-                bank customers in the external government system.
-            </li>
-            <li>Split a monolithic system into microservices using the inner proprietary message-driven framework
-                (Akka-like).
-            </li>
-            <li>Developed one of the subsystems using OpenShift services for new external government API, both from
-                scratch and forking existing service.
-            </li>
-        </ul>
-
-        <h3>Optics design engineer, Branch of Kometa corp., Saint-Petersburg, Russia</h3>
-        <p><em>Sept. 2012 - Sept. 2018</em></p>
-        <ul>
-            <li>Research and development, the mechanical design of optical devices for scientific and space
-                applications, leading a group of up to 3 colleagues.
-            </li>
-        </ul>
+        <!--/b-->
     </section>
 
     <section>
         <h2>Education</h2>
-        <h3>Advanced training courses on the topic "Software developer using Java EE technologies"</h3>
-        <p><em>Innopolis University, 2019</em></p>
-
-        <h3>Master's Degree in Optotechnics</h3>
-        <p><em>The National Research University of Information Technologies, Mechanics and Optics (ITMO University),
-            Department of Applied and Computer Optics, 2006-2012</em></p>
+        <!--v education/--><!--b education-->
+        <h3>{{v degree/}}</h3>
+        <p><em>{{v name/}}, {{v year/}}</em>
+            <br><em>{{v description/}}</em></p>
+        <!--/b-->
     </section>
 </div>
 </body>
