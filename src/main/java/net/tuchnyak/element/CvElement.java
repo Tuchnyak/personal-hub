@@ -1,6 +1,4 @@
-package net.tuchnyak.element;/**
- * @author tuchnyak (George Shchennikov)
- */
+package net.tuchnyak.element;
 
 import net.tuchnyak.model.ContactInfo;
 import net.tuchnyak.repository.CvRepository;
