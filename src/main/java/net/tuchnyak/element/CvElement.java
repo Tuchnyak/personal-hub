@@ -20,7 +20,7 @@ public class CvElement implements Element, Logging {
         this.cvRepository = cvRepository;
     }
 
-    public void process(Context c) throws Exception {
+    public void process(Context c) {
         var cvTemplate = c.template("cv");
 
         List<ContactInfo> contactInfoList = cvRepository.getContactInfoList();
