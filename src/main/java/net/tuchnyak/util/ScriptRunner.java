@@ -6,7 +6,7 @@ import rife.database.DbQueryManager;
 
 public class ScriptRunner {
 
-    private DbQueryManager qManager;
+    private final DbQueryManager qManager;
 
     public ScriptRunner(DbQueryManager qManager) {
         this.qManager = qManager;

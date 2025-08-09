@@ -1,6 +1,5 @@
 package net.tuchnyak.element;
 
-import net.tuchnyak.repository.CvRepository;
 import net.tuchnyak.service.CvService;
 import net.tuchnyak.service.CvServiceImpl;
 import net.tuchnyak.util.Logging;
@@ -10,8 +9,8 @@ public class CvElement implements Element, Logging {
 
     private final CvService cvService;
 
-    public CvElement(CvRepository cvRepository) {
-        this.cvService = new CvServiceImpl(cvRepository);
+    public CvElement(CvServiceImpl cvService) {
+        this.cvService = cvService;
     }
 
     public void process(Context c) {
