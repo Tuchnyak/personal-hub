@@ -1,6 +1,7 @@
 package net.tuchnyak.repository;
 
 import net.tuchnyak.model.portfolio.ProjectImage;
+import net.tuchnyak.model.portfolio.ProjectImageIdOnly;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  */
 public interface ProjectImageRepository {
 
-    List<ProjectImage> getProjectImageListByProjectIdList(List<Integer> projectIdList);
+    List<ProjectImageIdOnly> getProjectImageIdListByProjectIdList(List<Integer> projectIdList);
+    ProjectImage getImageById(int imageId);
 
 }

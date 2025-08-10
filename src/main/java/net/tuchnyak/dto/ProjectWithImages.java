@@ -1,7 +1,7 @@
 package net.tuchnyak.dto;
 
 import net.tuchnyak.model.portfolio.Project;
-import net.tuchnyak.model.portfolio.ProjectImage;
+import net.tuchnyak.model.portfolio.ProjectImageIdOnly;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ import java.util.List;
  */
 public record ProjectWithImages(
         Project project,
-        List<ProjectImage> projectImageList
+        List<ProjectImageIdOnly> projectImageIdList
 ) {
 }

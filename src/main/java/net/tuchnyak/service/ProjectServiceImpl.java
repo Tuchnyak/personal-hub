@@ -2,6 +2,7 @@ package net.tuchnyak.service;
 
 import net.tuchnyak.dto.ProjectWithImages;
 import net.tuchnyak.model.portfolio.Project;
+import net.tuchnyak.model.portfolio.ProjectImage;
 import net.tuchnyak.repository.ProjectImageRepository;
 import net.tuchnyak.repository.ProjectRepository;
 
@@ -24,7 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProjectWithImages> getAllProjectsWithImages() {
         var projects = projectRepository.getAllProjects();
         var projectIdList = projects.stream().map(Project::getId).toList();
-        var imageList = projectImageRepository.getProjectImageListByProjectIdList(projectIdList);
+        var imageList = projectImageRepository.getProjectImageIdListByProjectIdList(projectIdList);
 
         return projects.stream()
                 .map(project -> new ProjectWithImages(
@@ -34,6 +35,12 @@ public class ProjectServiceImpl implements ProjectService {
                                         .toList()
                         )
                 ).toList();
+    }
+
+    @Override
+    public ProjectImage getProjectImageById(int imageId) {
+
+        return projectImageRepository.getImageById(imageId);
     }
 
 }

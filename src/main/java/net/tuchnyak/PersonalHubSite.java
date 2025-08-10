@@ -6,6 +6,7 @@ import net.tuchnyak.db.MigrationImplementer;
 import net.tuchnyak.repository.CvRepository;
 import net.tuchnyak.repository.CvRepositoryImpl;
 import net.tuchnyak.router.CvRouter;
+import net.tuchnyak.router.ProjectRouter;
 import net.tuchnyak.util.Logging;
 import rife.engine.*;
 
@@ -21,6 +22,8 @@ public class PersonalHubSite extends Site implements Logging {
 
     public void setup() {
         var cvRouter = group("/cv", new CvRouter(cvRepository));
+        group("/projects", new ProjectRouter(DataSourceManager.getInstance().getDataSource()));
+
         get("/", c -> c.redirect(cvRouter.getRootPath()));
 
         getLogger().info(">>> PersonalHubSite setup completed");

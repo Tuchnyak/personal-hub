@@ -4,7 +4,6 @@ import net.tuchnyak.service.ProjectServiceImpl;
 import rife.engine.Context;
 import rife.engine.Element;
 
-import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -12,28 +11,17 @@ import java.util.Objects;
  */
 public class ProjectImageElement implements Element {
 
-    private final int projectId;
     private final ProjectServiceImpl projectService;
 
-    public ProjectImageElement(String projectId, ProjectServiceImpl projectService) {
-        Objects.requireNonNull(projectId, "projectId must not be null");
-        this.projectId = Integer.parseInt(projectId);
+    public ProjectImageElement(ProjectServiceImpl projectService) {
         this.projectService = projectService;
     }
 
     public void process(Context c) throws Exception {
         c.setContentType("image/png");
+        int id = Integer.parseInt(c.parameter("image_id"));
         try (var outputStream = c.outputStream()) {
-            projectService.getAllProjectsWithImages().stream()
-                    .filter(dto -> dto.project().getId() == projectId)
-                    .flatMap(dto -> dto.projectImageList().stream())
-                    .forEach(image -> {
-                        try {
-                            outputStream.write(image.getImage_data());
-                        } catch (IOException e) {
-                            throw new RuntimeException("Failed to write image data to output stream", e);
-                        }
-                    });
+            outputStream.write(projectService.getProjectImageById(id).getImage_data());
             outputStream.flush();
         }
     }

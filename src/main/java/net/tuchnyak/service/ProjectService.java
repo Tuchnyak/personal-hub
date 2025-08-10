@@ -1,6 +1,7 @@
 package net.tuchnyak.service;
 
 import net.tuchnyak.dto.ProjectWithImages;
+import net.tuchnyak.model.portfolio.ProjectImage;
 
 import java.util.List;
 
@@ -10,5 +11,6 @@ import java.util.List;
 public interface ProjectService {
 
     List<ProjectWithImages> getAllProjectsWithImages();
+    ProjectImage getProjectImageById(int imageId);
 
 }
