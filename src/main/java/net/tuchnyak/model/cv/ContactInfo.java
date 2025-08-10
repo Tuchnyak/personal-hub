@@ -1,4 +1,4 @@
-package net.tuchnyak.model;
+package net.tuchnyak.model.cv;
 
 public class ContactInfo {
     private int id;

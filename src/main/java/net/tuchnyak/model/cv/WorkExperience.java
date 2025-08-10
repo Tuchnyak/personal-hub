@@ -1,4 +1,4 @@
-package net.tuchnyak.model;
+package net.tuchnyak.model.cv;
 
 import java.sql.Date;
 public class WorkExperience {

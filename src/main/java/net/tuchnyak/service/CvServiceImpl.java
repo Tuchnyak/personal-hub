@@ -1,6 +1,6 @@
 package net.tuchnyak.service;
 
-import net.tuchnyak.model.ContactInfo;
+import net.tuchnyak.model.cv.ContactInfo;
 import net.tuchnyak.repository.CvRepository;
 import rife.template.Template;
 
