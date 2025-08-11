@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!--v title-->Georgii Shchennikov - Projects<!--/v--></title>
+    <link rel="stylesheet" href="{{v webapp:rootUrl/}}css/style.css?{{v context:paramRandom/}}">
+    <link rel="stylesheet" href="{{v webapp:rootUrl/}}css/projects.css?{{v context:paramRandom/}}">
+</head>
+<body>
+<h1>George's Projects</h1>
+
+<section>
+    <!--v projects /--><!--b projects-->
+    <div class="project">
+        <h2>{{v project_name/}}</h2>
+        <p>{{v project_description/}}</p>
+        <p><strong>Technologies:</strong> {{v project_technologies/}}</p>
+        <p><strong>Project URL: </strong><a href="{{v project_url/}}">{{v project_url/}}</a></p>
+        <p><strong>GitHub: </strong><a href="{{v project_repo_url/}}">{{v project_repo_url/}}</a></p>
+
+        <div class="image-container">
+            {{v image_id_list/}}{{b image_id_list}}
+            <img src="{{v webapp:rootUrl/}}projects/image/{{v image_id/}}" alt="{{v project_name/}} picture">
+            {{/b}}
+        </div>
+    </div>
+    <!--/b-->
+</section>
+</body>
+</html>

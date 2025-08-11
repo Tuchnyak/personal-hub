@@ -14,11 +14,10 @@ public class ProjectElement implements Element {
     }
 
     public void process(Context c) throws Exception {
-        var projectTemplate = c.template("project");
+        var projectTemplate = c.template("projects");
 
         projectService.getAllProjectsWithImages()
                 .forEach(projectDto -> {
-                    projectTemplate.setValue("project_id", projectDto.project().getId());
                     projectTemplate.setValue("project_name", projectDto.project().getTitle());
                     projectTemplate.setValue("project_description", projectDto.project().getDescription());
                     projectTemplate.setValue("project_technologies", projectDto.project().getTechnologies());

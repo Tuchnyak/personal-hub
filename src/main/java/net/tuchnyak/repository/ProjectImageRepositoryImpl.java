@@ -6,7 +6,9 @@ import rife.database.Datasource;
 import rife.database.DbQueryManager;
 import rife.database.queries.Select;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author tuchnyak (George Shchennikov)
@@ -23,12 +25,20 @@ public class ProjectImageRepositoryImpl implements ProjectImageRepository {
 
     @Override
     public List<ProjectImageIdOnly> getProjectImageIdListByProjectIdList(List<Integer> projectIdList) {
+        var placeholders = String.join(",", Collections.nCopies(projectIdList.size(), "?"));
         var select = new Select(datasource)
                 .fields("id", "project_id")
                 .from("portfolio.project_images")
-                .where("project_id", "in", projectIdList);
+                .where("project_id IN (" + placeholders + ")");
 
-        return dbQueryManager.executeFetchAllBeans(select, ProjectImageIdOnly.class);
+        return dbQueryManager.executeFetchAllBeans(
+                select,
+                ProjectImageIdOnly.class,
+                stmt -> {
+                    var i = new AtomicInteger(1);
+                    projectIdList.forEach(id -> stmt.setInt(i.getAndIncrement(), id));
+                }
+        );
     }
 
     @Override

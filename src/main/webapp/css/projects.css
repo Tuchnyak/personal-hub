@@ -1,0 +1,15 @@
+.image-container {
+    display: flex;
+    overflow-x: auto; /* Включаем горизонтальную прокрутку */
+    white-space: nowrap; /* Запрещаем перенос строк */
+    padding-bottom: 10px; /* Чтобы тень не обрезалась */
+    margin-bottom: 10px;
+}
+
+.image-container img {
+    width: 200px; /* Фиксированная ширина изображения */
+    height: auto;
+    margin-right: 10px; /* Отступ между изображениями */
+    display: inline-block; /* Убираем пробелы между элементами */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для красоты */
+}
