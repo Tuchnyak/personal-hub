@@ -8,17 +8,72 @@
     --main-font-size: 18px;
 
     /* colors */
-    --main-background-color: #0d0d0d;
-    --main-text-color: #d0d0d0;
+    --main-background-color: #f8f8f8; /* Changed from dark to light */
+    --main-text-color: #333; /* Changed from light to dark */
 
     /* margins and padding */
     --content-padding: 2em;
 }
 
 body {
-    background: var(--main-background-color);
     font-family: var(--main-font);
-    font-style: var(--main-font-size); /* Убираем, т.к. это неверное свойство */
+    background-color: var(--main-background-color);
     color: var(--main-text-color);
-    padding: var(--content-padding);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0; /* Body padding is often not needed when using containers */
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+/* Common Typography */
+h1, h2, h3 {
+    color: #000000;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 0;
+}
+
+h2 {
+    font-size: 1.8em;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+.subtitle {
+    font-size: 1.2em;
+    color: #777;
+    margin-top: 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+a {
+    color: #0077cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }

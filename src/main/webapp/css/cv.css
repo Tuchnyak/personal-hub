@@ -1,65 +1,11 @@
 /* src/main/webapp/css/cv.css */
 
-body {
-    font-family: var(--main-font);
-    background-color: #f8f8f8;
-    color: #333;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
+.page-container {
     max-width: 800px;
     margin: 20px auto;
     padding: 30px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-/* Общий класс для заголовков */
-.heading {
-    color: #000000;
-    margin-bottom: 15px;
-}
-
-h1 {
-    font-size: 2.5em;
-    margin-bottom: 0px; /* Specific to h1 */
-}
-
-.subtitle {
-    font-size: 1.2em;
-    color: #777;
-    margin-top: 0px;
-}
-
-section {
-    margin-bottom: 30px;
-}
-
-h2 {
-    font-size: 1.8em;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 5px; /* Specific to h2 */
-}
-
-h3 {
-    font-size: 1.2em;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 5px;
 }
 
 li.work_experience {
@@ -74,15 +20,6 @@ li.work_experience::before {
     left: 0;
     top: 0;
     color: black; /* Цвет точки */
-}
-
-a {
-    color: #0077cc;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
 }
 
 h3::before {
