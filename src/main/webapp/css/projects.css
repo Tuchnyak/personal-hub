@@ -4,11 +4,14 @@
     white-space: nowrap; /* Запрещаем перенос строк */
     padding-bottom: 10px; /* Чтобы тень не обрезалась */
     margin-bottom: 10px;
+    height: 200px; /* Фиксированная высота */
+    align-items: center; /* Вертикальное центрирование */
 }
 
 .image-container img {
-    width: 200px; /* Фиксированная ширина изображения */
-    height: auto;
+    width: 100%; /* Занимаем всю ширину контейнера */
+    height: 100%; /* Занимаем всю высоту контейнера */
+    object-fit: cover; /* Масштабируем с сохранением пропорций */
     margin-right: 10px; /* Отступ между изображениями */
     display: inline-block; /* Убираем пробелы между элементами */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для красоты */
