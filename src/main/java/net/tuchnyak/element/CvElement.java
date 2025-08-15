@@ -14,7 +14,10 @@ public class CvElement implements Element, Logging {
     }
 
     public void process(Context c) {
-        var cvTemplate = c.template("cv");
+        var cvTemplate = c.template("layout");
+        cvTemplate.setBlock("main_content", "cv_include");
+        cvTemplate.setBlock("custom_css", "css_cv");
+        cvTemplate.setValue("title", "Georgii Shchennikov - CV");
 
         cvService.processContactInfo(cvTemplate);
         cvService.processSkills(cvTemplate);

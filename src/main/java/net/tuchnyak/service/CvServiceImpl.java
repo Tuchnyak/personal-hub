@@ -2,6 +2,7 @@ package net.tuchnyak.service;
 
 import net.tuchnyak.model.cv.ContactInfo;
 import net.tuchnyak.repository.CvRepository;
+import net.tuchnyak.util.BlockAppendHandler;
 import rife.template.Template;
 
 import java.text.SimpleDateFormat;
@@ -63,7 +64,6 @@ public class CvServiceImpl implements CvService {
                             cvTemplate.setValue("datto", we.getDatto() == null ? "Present" : WORK_EXPERIENCE_DATE_FORMAT.format(we.getDatto()));
                             parseDescription(we.getDescription(), cvTemplate);
                             cvTemplate.appendBlock("work_experience");
-                            cvTemplate.removeValue("description_list");
                         }
                 );
     }
@@ -84,11 +84,12 @@ public class CvServiceImpl implements CvService {
 
     void parseDescription(String description, Template cvTemplate) {
         String[] descriptionArray = description.split("\\\\n");
+        var blockAppender = new BlockAppendHandler(cvTemplate);
         Arrays.stream(descriptionArray)
                 .map(String::trim)
                 .forEach(descriptionLine -> {
                     cvTemplate.setValue("description_line", descriptionLine);
-                    cvTemplate.appendBlock("description_list");
+                    blockAppender.setOrAppend("description_list");
                 });
     }
 

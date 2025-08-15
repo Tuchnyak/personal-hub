@@ -49,6 +49,10 @@ h2 {
     padding-bottom: 5px; /* Specific to h2 */
 }
 
+h3 {
+    font-size: 1.2em;
+}
+
 ul {
     list-style: none;
     padding: 0;

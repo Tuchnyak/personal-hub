@@ -4,8 +4,6 @@ import net.tuchnyak.service.ProjectServiceImpl;
 import rife.engine.Context;
 import rife.engine.Element;
 
-import java.util.Objects;
-
 /**
  * @author tuchnyak (George Shchennikov)
  */
