@@ -29,3 +29,10 @@ h3::before {
     width: 1em;
     margin-left: -0em;
 }
+
+/* Highlighter effect */
+.work-experience-section h3, .highlight {
+    display: inline;
+    background: linear-gradient(180deg, transparent 30%, #fff59d 30%, #fff59d 85%, transparent 85%);
+    padding: 0 3px;
+}
