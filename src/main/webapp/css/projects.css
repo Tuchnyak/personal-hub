@@ -1,18 +1,20 @@
 .image-container {
     display: flex;
-    overflow-x: auto; /* Включаем горизонтальную прокрутку */
-    white-space: nowrap; /* Запрещаем перенос строк */
-    padding-bottom: 10px; /* Чтобы тень не обрезалась */
+    overflow-x: auto; /* Горизонтальная прокрутка */
+    overflow-y: hidden; /* Убираем вертикальную прокрутку */
+    white-space: nowrap;
+    padding-bottom: 10px;
     margin-bottom: 10px;
-    height: 200px; /* Фиксированная высота */
-    align-items: center; /* Вертикальное центрирование */
+    height: 200px;
+    align-items: center;
 }
 
 .image-container img {
-    width: 100%; /* Занимаем всю ширину контейнера */
+    width: auto; /* Ширина авто, чтобы не искажать */
     height: 100%; /* Занимаем всю высоту контейнера */
-    object-fit: cover; /* Масштабируем с сохранением пропорций */
-    margin-right: 10px; /* Отступ между изображениями */
-    display: inline-block; /* Убираем пробелы между элементами */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для красоты */
+    object-fit: contain; /* Вписываем, а не обрезаем */
+    margin-right: 10px;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer; /* Намекаем на кликабельность */
 }
