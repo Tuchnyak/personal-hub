@@ -30,9 +30,32 @@ h3::before {
     margin-left: -0em;
 }
 
-/* Highlighter effect */
+/* Highlighter effect with a subtle texture and soft edges */
 .work-experience-section h3, .highlight {
-    display: inline;
-    background: linear-gradient(180deg, transparent 30%, #fff59d 30%, #fff59d 85%, transparent 85%);
-    padding: 0 3px;
+    display: inline-block; /* Используем inline-block для лучшего контроля */
+    padding: 2px 8px; /* Увеличим отступы, чтобы края не касались текста */
+    margin: 0 -5px; /* Компенсируем отступы, чтобы не ломать поток */
+    position: relative; /* Нужно для псевдо-элемента */
+    z-index: 1;
+}
+
+.work-experience-section h3 span::before, .highlight::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+
+    /* 1. Цвет + Текстура */
+    background-image:
+        /* Верхний слой: Легкая диагональная штриховка */
+        repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px),
+        /* Нижний слой: Наш бледный желтый цвет */
+        linear-gradient(180deg, #fff9c0, #fff9c0);
+
+    /* 2. Мягкие, волнистые края */
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence baseFrequency='0.02 0.05' numOctaves='3'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence baseFrequency='0.02 0.05' numOctaves='3'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
 }
