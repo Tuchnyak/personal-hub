@@ -6,16 +6,11 @@ import rife.test.MockConversation;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonalHubTest {
+
     @Test
     void verifyRoot() {
         var m = new MockConversation(new PersonalHubSite());
-        assertEquals(m.doRequest("/").getStatus(), 302);
+        assertEquals(302, m.doRequest("/").getStatus());
     }
 
-    @Test
-    void verifyHello() {
-        var m = new MockConversation(new PersonalHubSite());
-        assertEquals("Hello personal-hub", m.doRequest("/hello")
-            .getTemplate().getValue("title"));
-    }
 }
