@@ -1,7 +1,5 @@
 package net.tuchnyak.text;
 
-import com.vladsch.flexmark.parser.Parser;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class MarkdownToHtmlConverterTest {
 
-    private final MarkdownToHtmlConverter underTest = new MarkdownToHtmlConverter();
+    private final TextConverter underTest = TextConverterFactory.getMarkdownConverter();
 
     @ParameterizedTest
     @CsvSource({
@@ -27,8 +25,7 @@ class MarkdownToHtmlConverterTest {
             "* Элемент 1, <ul><li>Элемент 1</li></ul>"
     })
     void convert(String markdown, String expectedHtml) {
-        MarkdownToHtmlConverter converter = new MarkdownToHtmlConverter();
-        String actualHtml = converter.convert(markdown).outputData().orElse("").trim().replaceAll("\n", "");
+        String actualHtml = underTest.convert(markdown).outputData().orElse("").trim().replaceAll("\n", "");
         assertEquals(expectedHtml, actualHtml);
     }
 
