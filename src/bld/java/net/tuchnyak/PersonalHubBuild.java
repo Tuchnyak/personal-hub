@@ -24,6 +24,7 @@ public class PersonalHubBuild extends WebProject {
                 .include(dependency("com.uwyn.rife2", "rife2", version(1, 9, 1)))
                 .include(dependency("org.hsqldb", "hsqldb", version(2, 7, 4)))
                 .include(dependency("com.vladsch.flexmark", "flexmark-all", version(0, 64, 0)))
+                .include(dependency("com.fasterxml.uuid", "java-uuid-generator", version(5, 1, 0)))
                 .include(dependency("org.slf4j", "slf4j-api", version(2, 0, 16)));
         scope(test)
                 .include(dependency("org.jsoup", "jsoup", version(1, 18, 3)))
