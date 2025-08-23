@@ -5,7 +5,7 @@ CREATE SCHEMA migration authorization dba;
 
 create table migration.db_version(
     version INT NOT NULL PRIMARY KEY,
-    applied_on TIMESTAMP NOT NULL
+    applied_on TIMESTAMP(9) NOT NULL
 );
 
 INSERT INTO migration.db_version (version, applied_on)

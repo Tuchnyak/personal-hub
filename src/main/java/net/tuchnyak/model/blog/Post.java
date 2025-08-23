@@ -1,5 +1,7 @@
 package net.tuchnyak.model.blog;
 
+import net.tuchnyak.util.StringUtil;
+
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -18,6 +20,17 @@ public class Post {
     private Timestamp updated_at;
 
     public Post() {
+    }
+
+    public Post(UUID id, String title, String slug, String content_html, boolean is_published, Timestamp published_at, Timestamp created_at, Timestamp updated_at) {
+        this.id = id;
+        this.title = title;
+        this.slug = slug;
+        this.content_html = content_html;
+        this.is_published = is_published;
+        this.published_at = published_at;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
     }
 
     public UUID getId() {
@@ -90,12 +103,12 @@ public class Post {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", slug='" + slug + '\'' +
-                ", contentHtml='" + content_html.substring(0, 100) + '\'' +
+                ", contentHtml='" + new StringUtil().cutIfTooLong(content_html, 100) + '\'' +
                 ", isPublished=" + is_published +
                 ", publishedAt=" + published_at +
                 ", createdAt=" + created_at +
                 ", updatedAt=" + updated_at +
                 '}';
     }
-    
+
 }
