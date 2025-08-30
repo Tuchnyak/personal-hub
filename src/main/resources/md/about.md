@@ -5,7 +5,7 @@ slug: /about
 
 # Welcome to My Personal Hub!
 
-Hello there! I'm George, a backend Java/Kotlin developer, and a proud father of two. This is my digital space where I explore, build, and share my journey in the world of technology.
+Hello there! I'm **George**{.highlight}, a backend **Java/Kotlin** developer, and a proud father of two. This is my digital space where I explore, build, and share my journey in the world of technology.
 
 ## About Me
 
@@ -17,9 +17,9 @@ Outside of work, my family is my greatest joy. Being a father adds a wonderful d
 
 ## What You'll Find Here
 
-*   **Blog Posts:** Deep dives into technical topics, development insights, and my thoughts on software development journeys. And some personal thoughts.
-*   **Projects:** Showcases of the applications and tools I'm building, often with behind-the-scenes looks.
-*   **CV:** A detailed overview of my professional experience and skills.
+*   **Blog Posts:**{.highlight} [>>>](blog) Deep dives into technical topics, development insights, and my thoughts on software development journeys. And some personal thoughts.
+*   **Projects:**{.highlight} [>>>](projects) Showcases of the applications and tools I'm building, often with behind-the-scenes looks.
+*   **CV:**{.highlight} [>>>](cv) A detailed overview of my professional experience and skills.
 
 Thank you for stopping by! Feel free to explore and connect.
 

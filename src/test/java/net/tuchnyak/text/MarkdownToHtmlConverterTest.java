@@ -21,6 +21,7 @@ class MarkdownToHtmlConverterTest {
             "*курсив*{.highlight}, <p><em class=\"highlight\">курсив</em></p>",
             "~~strikethrough~~, <p><del>strikethrough</del></p>",
             "some text https://google.com and more, <p>some text <a href=\"https://google.com\">https://google.com</a> and more</p>",
+            "Some [TEST](https://google.com) and more, <p>Some <a href=\"https://google.com\">TEST</a> and more</p>",
             "- Элемент 1, <ul><li>Элемент 1</li></ul>",
             "* Элемент 1, <ul><li>Элемент 1</li></ul>"
     })

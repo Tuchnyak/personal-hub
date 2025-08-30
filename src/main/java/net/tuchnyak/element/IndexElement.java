@@ -18,8 +18,6 @@ public class IndexElement implements Element, Logging {
     }
 
     public void process(Context c) throws Exception {
-        var indexTemplate = c.template("index");
-
         String title;
         String body;
         try {
@@ -32,8 +30,10 @@ public class IndexElement implements Element, Logging {
             body = "<p>Something gone wrong! Sorry!</p>";
         }
 
-        indexTemplate.setValue("about_title", title);
-        indexTemplate.setValue("about_body", body);
+        var indexTemplate = c.template("layout");
+        indexTemplate.setBlock("main_content", "index_include");
+        indexTemplate.setValue("title", title);
+        indexTemplate.setValue("content_body", body);
 
         c.print(indexTemplate);
     }
