@@ -1,5 +1,6 @@
 package net.tuchnyak.repository;
 
+import net.tuchnyak.db.Transactional;
 import net.tuchnyak.model.blog.Post;
 import rife.database.Datasource;
 import rife.database.DbQueryManager;
@@ -8,6 +9,8 @@ import rife.database.queries.Insert;
 import rife.database.queries.Select;
 import rife.database.queries.Update;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,7 +18,7 @@ import java.util.UUID;
 /**
  * @author tuchnyak (George Shchennikov)
  */
-public class PostRepositoryImpl implements PostRepository {
+public class PostRepositoryImpl implements PostRepository, Transactional {
 
     public static final String BLOG_POSTS_TABLE = "blog.posts";
 
@@ -44,6 +47,7 @@ public class PostRepositoryImpl implements PostRepository {
     public void update(Post post) {
         var update = new Update(datasource)
                 .table(BLOG_POSTS_TABLE)
+                .where("id", "=", post.getId().toString())
                 .fields(post);
         dbQueryManager.executeUpdate(update);
     }
@@ -72,7 +76,7 @@ public class PostRepositoryImpl implements PostRepository {
     public int deleteById(UUID id) {
         var deletion = new Delete(datasource)
                 .from(BLOG_POSTS_TABLE)
-                .where("id", "=", id);
+                .where("id", "=", id.toString());
 
         return dbQueryManager.executeUpdate(deletion);
     }
@@ -100,16 +104,41 @@ public class PostRepositoryImpl implements PostRepository {
                 .from(BLOG_POSTS_TABLE)
                 .where("slug", "=", slug);
 
-        return Optional.ofNullable(dbQueryManager.executeFetchFirstBean(selection, Post.class));
+        var post  = new Post();
+        var isFound = dbQueryManager.executeFetchFirst(selection, rs -> populatePostByResultSet(rs, post));
+        if (!isFound) return Optional.empty();
+
+        return Optional.of(post);
     }
 
     @Override
     public Optional<Post> findById(UUID id) {
         var selection = new Select(datasource)
                 .from(BLOG_POSTS_TABLE)
-                .where("id", "=", id);
+                .where("id", "=", id.toString());
 
-        return Optional.ofNullable(dbQueryManager.executeFetchFirstBean(selection, Post.class));
+        var post  = new Post();
+        var isFound = dbQueryManager.executeFetchFirst(selection, rs -> populatePostByResultSet(rs, post));
+        if (!isFound) return Optional.empty();
+
+        return Optional.of(post);
     }
 
+    @Override
+    public DbQueryManager getDbQueryManager() {
+
+        return dbQueryManager;
+    }
+
+
+    private static void populatePostByResultSet(ResultSet rs, Post post) throws SQLException {
+        post.setId(UUID.fromString(rs.getString(1)));
+        post.setTitle(rs.getString(2));
+        post.setSlug(rs.getString(3));
+        post.setContent_html(rs.getString(4));
+        post.setIs_published(rs.getBoolean(5));
+        post.setPublished_at(rs.getTimestamp(6));
+        post.setCreated_at(rs.getTimestamp(7));
+        post.setUpdated_at(rs.getTimestamp(8));
+    }
 }

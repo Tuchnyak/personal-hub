@@ -26,18 +26,19 @@ public class PersonalHubBuild extends WebProject {
         scope(compile)
                 .include(dependency("com.uwyn.rife2", "rife2", version(1, 9, 1)))
                 .include(dependency("org.hsqldb", "hsqldb", hsqlDbVersion))
-                .include(dependency("com.vladsch.flexmark", "flexmark-all", version(0, 64, 0)))
+                .include(dependency("com.vladsch.flexmark", "flexmark-all", version(0, 64, 8)))
                 .include(dependency("com.fasterxml.uuid", "java-uuid-generator", version(5, 1, 0)))
-                .include(dependency("org.slf4j", "slf4j-api", version(2, 0, 16)));
+                .include(dependency("org.slf4j", "slf4j-api", version(2, 0, 17)));
         scope(test)
                 .include(dependency("org.hsqldb", "hsqldb", hsqlDbVersion))
-                .include(dependency("org.jsoup", "jsoup", version(1, 18, 3)))
-                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 11, 4)))
-                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 11, 4)));
+                .include(dependency("org.jsoup", "jsoup", version(1, 21, 1)))
+                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 13, 4)))
+                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 13, 4)))
+                .include(dependency("org.mockito", "mockito-junit-jupiter", version(5, 19, 0)));
         scope(standalone)
                 .include(dependency("org.eclipse.jetty.ee10", "jetty-ee10", version(12, 0, 16)))
                 .include(dependency("org.eclipse.jetty.ee10", "jetty-ee10-servlet", version(12, 0, 16)))
-                .include(dependency("org.slf4j", "slf4j-simple", version(2, 0, 16)));
+                .include(dependency("org.slf4j", "slf4j-simple", version(2, 0, 17)));
 
         precompileOperation()
                 .templateTypes(HTML);

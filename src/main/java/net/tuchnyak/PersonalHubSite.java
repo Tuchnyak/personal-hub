@@ -5,8 +5,10 @@ import net.tuchnyak.db.DbInitializer;
 import net.tuchnyak.db.MigrationImplementer;
 import net.tuchnyak.repository.CvRepository;
 import net.tuchnyak.repository.CvRepositoryImpl;
+import net.tuchnyak.repository.PostRepositoryImpl;
 import net.tuchnyak.router.CvRouter;
 import net.tuchnyak.router.ProjectRouter;
+import net.tuchnyak.service.PostUploadServiceImpl;
 import net.tuchnyak.util.Logging;
 import rife.engine.*;
 
@@ -16,7 +18,10 @@ public class PersonalHubSite extends Site implements Logging {
 
     public PersonalHubSite() {
         new DbInitializer().initialize();
-        new MigrationImplementer(DataSourceManager.getInstance().getDataSource()).implementMigrations();
+        new MigrationImplementer(
+                DataSourceManager.getInstance().getDataSource(),
+                new PostUploadServiceImpl(new PostRepositoryImpl(DataSourceManager.getInstance().getDataSource()))
+        ).implementMigrations();
         cvRepository = new CvRepositoryImpl(DataSourceManager.getInstance().getDataSource());
     }
 

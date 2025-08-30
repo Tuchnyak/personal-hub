@@ -5,12 +5,16 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import net.tuchnyak.service.PostUploadService;
 import net.tuchnyak.util.FileReaderUtil;
 import net.tuchnyak.util.Logging;
+import net.tuchnyak.util.ResourcesHandler;
 import net.tuchnyak.util.ScriptRunner;
 import rife.database.Datasource;
 import rife.database.DbQueryManager;
 import rife.database.queries.Select;
+
+import static net.tuchnyak.service.PostUploadServiceImpl.ABOUT_SLUG;
 
 /**
  * @author tuchnyak (George Shchennikov)
@@ -21,10 +25,14 @@ public class MigrationImplementer implements Logging {
 
     private final Datasource dataSource;
     private final DbQueryManager queryManager;
+    private final PostUploadService postUploadService;
+    private final ResourcesHandler resourcesHandler;
 
-    public MigrationImplementer(Datasource datasource) {
+    public MigrationImplementer(Datasource datasource, PostUploadService postUploadService) {
         this.dataSource = datasource;
         this.queryManager = new DbQueryManager(datasource);
+        this.postUploadService = postUploadService;
+        this.resourcesHandler = ResourcesHandler.getInstance();
     }
 
     public void implementMigrations() {
@@ -67,6 +75,23 @@ public class MigrationImplementer implements Logging {
                     });
         });
         getLogger().info(">>> Migration completed");
+
+        postMigration();
+    }
+
+    private void postMigration() {
+        getLogger().info(">>> Postmigration started");
+        var aboutMdContent = resourcesHandler.getFileContent("md/about.md");
+        aboutMdContent.ifPresent(rawPost -> {
+            var uuid = postUploadService.uploadByReplace(rawPost, ABOUT_SLUG);
+            if (uuid == null) {
+                getLogger().warn(">>> About me post not uploaded!");
+            } else {
+                getLogger().info(">>> About me post uploaded: {}", uuid);
+                postUploadService.publishPost(uuid);
+            }
+        });
+        getLogger().info(">>> Postmigration completed");
     }
 
 }

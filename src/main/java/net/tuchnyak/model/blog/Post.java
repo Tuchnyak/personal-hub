@@ -22,15 +22,19 @@ public class Post {
     public Post() {
     }
 
-    public Post(UUID id, String title, String slug, String content_html, boolean is_published, Timestamp published_at, Timestamp created_at, Timestamp updated_at) {
-        this.id = id;
-        this.title = title;
-        this.slug = slug;
-        this.content_html = content_html;
-        this.is_published = is_published;
-        this.published_at = published_at;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
+    private Post(Builder builder) {
+        this.id = builder.id;
+        this.title = builder.title;
+        this.slug = builder.slug;
+        this.content_html = builder.content_html;
+        this.is_published = builder.is_published;
+        this.published_at = builder.published_at;
+        this.created_at = builder.created_at;
+        this.updated_at = builder.updated_at;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     public UUID getId() {
@@ -109,6 +113,61 @@ public class Post {
                 ", createdAt=" + created_at +
                 ", updatedAt=" + updated_at +
                 '}';
+    }
+
+    public static class Builder {
+        private UUID id;
+        private String title;
+        private String slug;
+        private String content_html;
+        private boolean is_published = false;
+        private Timestamp published_at;
+        private Timestamp created_at;
+        private Timestamp updated_at;
+
+        public Builder withId(UUID id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder withSlug(String slug) {
+            this.slug = slug;
+            return this;
+        }
+
+        public Builder withContentHtml(String content_html) {
+            this.content_html = content_html;
+            return this;
+        }
+
+        public Builder withIsPublished(boolean is_published) {
+            this.is_published = is_published;
+            return this;
+        }
+
+        public Builder withPublishedAt(Timestamp published_at) {
+            this.published_at = published_at;
+            return this;
+        }
+
+        public Builder withCreatedAt(Timestamp created_at) {
+            this.created_at = created_at;
+            return this;
+        }
+
+        public Builder withUpdatedAt(Timestamp updated_at) {
+            this.updated_at = updated_at;
+            return this;
+        }
+
+        public Post build() {
+            return new Post(this);
+        }
     }
 
 }

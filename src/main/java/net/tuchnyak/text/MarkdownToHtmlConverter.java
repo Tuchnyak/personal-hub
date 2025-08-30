@@ -12,6 +12,7 @@ import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.ast.Document;
 import com.vladsch.flexmark.util.data.MutableDataSet;
+import net.tuchnyak.util.Logging;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Optional;
 /**
  * @author tuchnyak (George Shchennikov)
  */
-public class MarkdownToHtmlConverter implements TextConverter {
+public class MarkdownToHtmlConverter implements TextConverter, Logging {
 
     private final Parser parser;
     private final HtmlRenderer renderer;
@@ -68,7 +69,7 @@ public class MarkdownToHtmlConverter implements TextConverter {
 
             return visitor.getData();
         } catch (Exception e) {
-
+            getLogger().debug(">>> Error while parsing YAML header!", e);
             return null;
         }
     }

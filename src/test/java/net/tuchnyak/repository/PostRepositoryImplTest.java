@@ -1,9 +1,7 @@
 package net.tuchnyak.repository;
 
-import net.tuchnyak.db.TestDataSource;
+import net.tuchnyak.db.AbstractTestDb;
 import net.tuchnyak.model.blog.Post;
-import net.tuchnyak.util.FileReaderUtil;
-import net.tuchnyak.util.ScriptRunner;
 import net.tuchnyak.uuid.UuidGenerator;
 import net.tuchnyak.uuid.UuidGeneratorFactory;
 import org.jetbrains.annotations.NotNull;
@@ -11,13 +9,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import rife.database.Datasource;
-import rife.database.DbQueryManager;
 import rife.database.queries.Select;
-import rife.resources.ResourceFinderDirectories;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Set;
@@ -28,39 +21,29 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author tuchnyak (George Shchennikov)
  */
-class PostRepositoryImplTest {
+class PostRepositoryImplTest extends AbstractTestDb {
 
-    private static final Datasource TEST_DATASOURCE = TestDataSource.getDataSource();
-
-    private static DbQueryManager queryManager;
     private static UuidGenerator idGenerator;
 
     private PostRepository underTest;
     private UUID fixedUuid;
 
     @BeforeAll
-    static void beforeAll() throws Exception {
-        initDb();
-        queryManager = new DbQueryManager(TEST_DATASOURCE);
+    static void beforeAllLocal() throws Exception {
         idGenerator = UuidGeneratorFactory.getV7TimeBasedUuidGenerator();
-    }
-
-    private static void initDb() throws Exception {
-        var resourceFinder = new ResourceFinderDirectories(new File("src/test/resources/db"));
-        new ScriptRunner(new DbQueryManager(PostRepositoryImplTest.TEST_DATASOURCE))
-                .executeUpdate(
-                        new FileReaderUtil().readFilePathToString(
-                                Paths.get(resourceFinder.getResource("test_init.sql").toURI())
-                        )
-                );
     }
 
     @BeforeEach
     void setUp() {
         fixedUuid = idGenerator.generate();
-        underTest = new PostRepositoryImpl(TEST_DATASOURCE);
+        underTest = new PostRepositoryImpl(testDataSource);
 
-        var postToSave = new Post(fixedUuid, "Title before each", "/before_each", "Test content", false, null, null, null);
+        var postToSave = Post.builder()
+                .withId(fixedUuid)
+                .withTitle("Title before each")
+                .withSlug("/before_each")
+                .withContentHtml("Test content")
+                .build();
         underTest.save(postToSave);
     }
 
@@ -77,7 +60,7 @@ class PostRepositoryImplTest {
         var postToSave = getPostToSave();
         underTest.save(postToSave);
 
-        var savedPosts = queryManager.executeFetchAllBeans(new Select(TEST_DATASOURCE).from("blog.posts"), Post.class);
+        var savedPosts = queryManager.executeFetchAllBeans(new Select(testDataSource).from("blog.posts"), Post.class);
 
         assertNotNull(savedPosts);
         assertEquals(1, savedPosts.size());
@@ -204,7 +187,13 @@ class PostRepositoryImplTest {
 
 
     private @NotNull Post getPostToSave() {
-        return new Post(idGenerator.generate(), "Title", "/slug", "Content", false, null, null, null);
+        return Post.builder()
+                .withId(idGenerator.generate())
+                .withTitle("Title")
+                .withSlug("/slug")
+                .withContentHtml("Content")
+                .withIsPublished(false)
+                .build();
     }
 
     private void deleteAll() {
