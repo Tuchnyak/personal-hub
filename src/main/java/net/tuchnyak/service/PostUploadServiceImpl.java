@@ -15,6 +15,7 @@ import net.tuchnyak.uuid.UuidGeneratorFactory;
 import rife.database.DbQueryManager;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * @author tuchnyak (George Shchennikov)
@@ -114,6 +115,13 @@ public class PostUploadServiceImpl implements PostUploadService, Logging {
             getLogger().error(">>> Error publishing Post with id '{}'", postId);
             throw new PostPublishException(postId, e);
         }
+    }
+
+    @Override
+    public Post getBySlug(String slug) {
+        var post = postRepository.findBySlug(slug);
+
+        return post.orElseThrow(() -> new PostNotFoundException("Post not fount by slug: %s".formatted(slug)));
     }
 
 

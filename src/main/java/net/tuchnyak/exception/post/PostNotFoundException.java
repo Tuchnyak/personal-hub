@@ -15,4 +15,8 @@ public class PostNotFoundException extends PersonalHubException {
         super(MESSAGE.formatted(postId.toString()));
     }
 
+    public PostNotFoundException(String message) {
+        super(message);
+    }
+
 }

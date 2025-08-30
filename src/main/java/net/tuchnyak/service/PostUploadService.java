@@ -15,4 +15,6 @@ public interface PostUploadService {
 
     void publishPost(UUID postId);
 
+    Post getBySlug(String slug);
+
 }
