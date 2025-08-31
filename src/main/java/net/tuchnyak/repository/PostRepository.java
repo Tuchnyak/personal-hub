@@ -1,5 +1,7 @@
 package net.tuchnyak.repository;
 
+import net.tuchnyak.dto.Page;
+import net.tuchnyak.dto.PostListItem;
 import net.tuchnyak.model.blog.Post;
 
 import java.util.List;
@@ -28,5 +30,9 @@ public interface PostRepository {
     Optional<Post> findBySlug(String slug);
 
     Optional<Post> findById(UUID slug);
+
+    List<PostListItem> findPublishedPosts(int page, int pageSize);
+
+    int countPosts(boolean publishedOnly);
 
 }

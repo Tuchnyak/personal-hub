@@ -1,6 +1,8 @@
 package net.tuchnyak.repository;
 
 import net.tuchnyak.db.Transactional;
+import net.tuchnyak.dto.Page;
+import net.tuchnyak.dto.PostListItem;
 import net.tuchnyak.model.blog.Post;
 import rife.database.Datasource;
 import rife.database.DbQueryManager;
@@ -32,13 +34,24 @@ public class PostRepositoryImpl implements PostRepository, Transactional {
 
     @Override
     public void save(Post post) {
+        String[] includedFields = {
+                "id",
+                "slug",
+                "title",
+                "content_html"
+        };
+        if (post.isIs_published()) {
+            includedFields = new String[]{
+                    "id",
+                    "slug",
+                    "title",
+                    "content_html",
+                    "is_published",
+                    "published_at"
+            };
+        }
         var insertion = new Insert(datasource)
-                .fieldsIncluded(post, new String[]{
-                        "id",
-                        "slug",
-                        "title",
-                        "content_html"
-                })
+                .fieldsIncluded(post, includedFields)
                 .into(BLOG_POSTS_TABLE);
         dbQueryManager.executeUpdate(insertion);
     }
@@ -122,6 +135,31 @@ public class PostRepositoryImpl implements PostRepository, Transactional {
         if (!isFound) return Optional.empty();
 
         return Optional.of(post);
+    }
+
+    @Override
+    public List<PostListItem>  findPublishedPosts(int page, int pageSize) {
+        var selection = new Select(datasource)
+                .from(BLOG_POSTS_TABLE)
+                .fields("id", "title", "published_at", "slug")
+                .where("is_published", "=", true)
+                .orderBy("published_at", Select.OrderByDirection.DESC)
+                .offset((page - 1) * pageSize)
+                .limit(pageSize);
+
+        return dbQueryManager.executeFetchAllBeans(selection, PostListItem.class);
+    }
+
+    @Override
+    public int countPosts(boolean publishedOnly) {
+        var selection = new Select(datasource)
+                .from(BLOG_POSTS_TABLE)
+                .fields("count(*)");
+        if (publishedOnly) {
+            selection.where("is_published", "=", true);
+        }
+
+        return dbQueryManager.executeGetFirstInt(selection);
     }
 
     @Override

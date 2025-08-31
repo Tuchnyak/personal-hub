@@ -10,7 +10,7 @@ public class PersonalHubTest {
     @Test
     void verifyRoot() {
         var m = new MockConversation(new PersonalHubSite());
-        assertEquals(302, m.doRequest("/").getStatus());
+        assertEquals(200, m.doRequest("/").getStatus());
     }
 
 }

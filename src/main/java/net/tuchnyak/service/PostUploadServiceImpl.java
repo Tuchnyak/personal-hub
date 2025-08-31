@@ -1,6 +1,8 @@
 package net.tuchnyak.service;
 
 import net.tuchnyak.db.Transactional;
+import net.tuchnyak.dto.Page;
+import net.tuchnyak.dto.PostListItem;
 import net.tuchnyak.exception.PostUploadException;
 import net.tuchnyak.exception.post.*;
 import net.tuchnyak.model.blog.Post;
@@ -122,6 +124,25 @@ public class PostUploadServiceImpl implements PostUploadService, Logging {
         var post = postRepository.findBySlug(slug);
 
         return post.orElseThrow(() -> new PostNotFoundException("Post not fount by slug: %s".formatted(slug)));
+    }
+
+    @Override
+    public Page<PostListItem> getPublishedPostListPaginated(int page, int pageSize) {
+        var totalCount = postRepository.countPosts(true);
+        var postList = postRepository.findPublishedPosts(page, pageSize);
+        var totalPages = (int) Math.ceil((double) totalCount / pageSize);
+
+        if (postList.isEmpty())
+            throw new PostNotFoundException("No published posts found! [%s:%s]".formatted(page, pageSize));
+
+        return new Page<>(
+                postList,
+                page,
+                totalCount,
+                totalPages,
+                page < totalPages,
+                page > 1
+        );
     }
 
 

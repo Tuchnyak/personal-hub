@@ -1,7 +1,10 @@
 package net.tuchnyak.service;
 
 import net.tuchnyak.db.AbstractTestDb;
+import net.tuchnyak.dto.Page;
+import net.tuchnyak.dto.PostListItem;
 import net.tuchnyak.exception.PersonalHubException;
+import net.tuchnyak.exception.post.PostNotFoundException;
 import net.tuchnyak.model.blog.Post;
 import net.tuchnyak.repository.PostRepositoryImpl;
 import net.tuchnyak.util.TimestampSqlNow;
@@ -13,6 +16,8 @@ import org.mockito.Mockito;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -98,6 +103,99 @@ class PostUploadServiceImplTest extends AbstractTestDb {
     void shouldReplaceBySlugWhenNoPreviousPost() {
         var newId = underTest.uploadByReplace(aboutMdFileContent, "/about");
         assertNotNull(newId);
+    }
+
+    @Test
+    void shouldGetFirstPageOfPublishedPostListPaginated() {
+        IntStream.rangeClosed(1, 15).forEach(i -> repositorySpied.save(getPostWithSlug(i, i < 13)));
+
+        int pageNumber = 1;
+        int pageSize = 5;
+        Page<PostListItem> actualPage = underTest.getPublishedPostListPaginated(pageNumber, pageSize);
+
+        assertNotNull(actualPage);
+        assertFalse(actualPage.items().isEmpty());
+        assertEquals(5, actualPage.items().size());
+        assertEquals(1, actualPage.currentPage());
+        assertEquals(12, actualPage.totalItems());
+        assertEquals(3, actualPage.totalPages());
+        assertTrue(actualPage.hasNext());
+        assertFalse(actualPage.hasPrevious());
+
+        var items = actualPage.items();
+        for (int i = 0, j = 12; i < 5; i++, j--) {
+            assertEquals("Test_" + j, items.get(i).getTitle());
+        }
+    }
+
+    @Test
+    void shouldGetSecondPageOfPublishedPostListPaginated() {
+        IntStream.rangeClosed(1, 15).forEach(i -> repositorySpied.save(getPostWithSlug(i, i < 13)));
+
+        int pageNumber = 2;
+        int pageSize = 5;
+        Page<PostListItem> actualPage = underTest.getPublishedPostListPaginated(pageNumber, pageSize);
+
+        assertNotNull(actualPage);
+        assertFalse(actualPage.items().isEmpty());
+        assertEquals(5, actualPage.items().size());
+        assertEquals(2, actualPage.currentPage());
+        assertEquals(12, actualPage.totalItems());
+        assertEquals(3, actualPage.totalPages());
+        assertTrue(actualPage.hasNext());
+        assertTrue(actualPage.hasPrevious());
+
+        var items = actualPage.items();
+        for (int i = 0, j = 7; i < 5; i++, j--) {
+            assertEquals("Test_" + j, items.get(i).getTitle());
+        }
+    }
+
+    @Test
+    void shouldGetThirdPageOfPublishedPostListPaginated() {
+        IntStream.rangeClosed(1, 15).forEach(i -> repositorySpied.save(getPostWithSlug(i, i < 13)));
+
+        int pageNumber = 3;
+        int pageSize = 5;
+        Page<PostListItem> actualPage = underTest.getPublishedPostListPaginated(pageNumber, pageSize);
+
+        assertNotNull(actualPage);
+        assertFalse(actualPage.items().isEmpty());
+        assertEquals(2, actualPage.items().size());
+        assertEquals(3, actualPage.currentPage());
+        assertEquals(12, actualPage.totalItems());
+        assertEquals(3, actualPage.totalPages());
+        assertFalse(actualPage.hasNext());
+        assertTrue(actualPage.hasPrevious());
+
+        var items = actualPage.items();
+        for (int i = 0, j = 2; i < 2; i++, j--) {
+            assertEquals("Test_" + j, items.get(i).getTitle());
+        }
+    }
+
+    @Test
+    void shouldThrowExceptionWhenPageIsGreaterThanTotalPages() {
+        IntStream.rangeClosed(1, 15).forEach(i -> repositorySpied.save(getPostWithSlug(i, i < 13)));
+
+        int pageNumber = 4;
+        int pageSize = 5;
+        assertThrows(PostNotFoundException.class, () -> underTest.getPublishedPostListPaginated(pageNumber, pageSize));
+    }
+
+
+    private Post getPostWithSlug(int count, boolean isPublished) {
+        var now = new TimestampSqlNow().now();
+        return Post.builder()
+                .withId(UUID.randomUUID())
+                .withTitle("Test_" + count)
+                .withSlug("/slug_" + count)
+                .withContentHtml("Test content")
+                .withIsPublished(isPublished)
+                .withCreatedAt(now)
+                .withUpdatedAt(now)
+                .withPublishedAt(isPublished ? now : null)
+                .build();
     }
 
 }

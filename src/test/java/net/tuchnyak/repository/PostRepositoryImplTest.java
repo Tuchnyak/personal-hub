@@ -185,6 +185,28 @@ class PostRepositoryImplTest extends AbstractTestDb {
         assertEquals("Test content", actual.get().getContent_html());
     }
 
+    @Test
+    void countAllPosts() {
+        var actual = underTest.countPosts(false);
+
+        assertEquals(1, actual);
+    }
+
+    @Test
+    void countPublishedPosts() {
+        underTest.save(getPostToSave());
+        var published = getPostToSave();
+        published.setIs_published(true);
+        published.setSlug("/me");
+        underTest.save(published);
+
+        var actual = underTest.countPosts(true);
+        assertEquals(1, actual);
+
+        actual = underTest.countPosts(false);
+        assertEquals(3, actual);
+    }
+
 
     private @NotNull Post getPostToSave() {
         return Post.builder()
