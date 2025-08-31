@@ -23,6 +23,7 @@ public class ProjectRouter extends Router implements Logging {
         this.dataSource = dataSource;
     }
 
+    @Override
     public void setup() {
         projectService = new ProjectServiceImpl(
                 new ProjectRepositoryImpl(dataSource),

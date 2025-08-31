@@ -13,9 +13,7 @@ import rife.database.queries.Update;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author tuchnyak (George Shchennikov)
@@ -117,7 +115,7 @@ public class PostRepositoryImpl implements PostRepository, Transactional {
                 .from(BLOG_POSTS_TABLE)
                 .where("slug", "=", slug);
 
-        var post  = new Post();
+        var post = new Post();
         var isFound = dbQueryManager.executeFetchFirst(selection, rs -> populatePostByResultSet(rs, post));
         if (!isFound) return Optional.empty();
 
@@ -130,7 +128,7 @@ public class PostRepositoryImpl implements PostRepository, Transactional {
                 .from(BLOG_POSTS_TABLE)
                 .where("id", "=", id.toString());
 
-        var post  = new Post();
+        var post = new Post();
         var isFound = dbQueryManager.executeFetchFirst(selection, rs -> populatePostByResultSet(rs, post));
         if (!isFound) return Optional.empty();
 
@@ -138,7 +136,7 @@ public class PostRepositoryImpl implements PostRepository, Transactional {
     }
 
     @Override
-    public List<PostListItem>  findPublishedPosts(int page, int pageSize) {
+    public List<PostListItem> findPublishedPosts(int page, int pageSize) {
         var selection = new Select(datasource)
                 .from(BLOG_POSTS_TABLE)
                 .fields("id", "title", "published_at", "slug")
@@ -146,8 +144,18 @@ public class PostRepositoryImpl implements PostRepository, Transactional {
                 .orderBy("published_at", Select.OrderByDirection.DESC)
                 .offset((page - 1) * pageSize)
                 .limit(pageSize);
+        List<PostListItem> retList = new ArrayList<>();
+        var isFound = dbQueryManager.executeFetchAll(selection, rs -> retList.add(new PostListItem(
+                                rs.getString(1),
+                                rs.getString(2),
+                                rs.getTimestamp(3).toLocalDateTime().toLocalDate(),
+                                rs.getString(4)
+                        )
+                )
+        );
+        if (!isFound) return Collections.emptyList();
 
-        return dbQueryManager.executeFetchAllBeans(selection, PostListItem.class);
+        return retList;
     }
 
     @Override

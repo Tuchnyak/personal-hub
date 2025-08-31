@@ -1,5 +1,6 @@
 package net.tuchnyak.dto;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,4 +14,17 @@ public record Page<T>(
         boolean hasNext,
         boolean hasPrevious
 ) {
+
+    public static <T> Page<T> empty() {
+
+        return new Page<>(
+                Collections.emptyList(),
+                0,
+                0,
+                0,
+                false,
+                false
+        );
+    }
+
 }

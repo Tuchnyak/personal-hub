@@ -17,6 +17,7 @@ public class CvRouter extends Router implements Logging {
         this.cvRepository = cvRepository;
     }
 
+    @Override
     public void setup() {
         cvService = new CvServiceImpl(cvRepository);
         rootRoute = get("/", PathInfoHandling.NONE, () -> new CvElement(cvService));

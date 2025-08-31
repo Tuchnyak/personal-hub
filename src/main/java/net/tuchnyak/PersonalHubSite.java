@@ -7,6 +7,7 @@ import net.tuchnyak.element.IndexElement;
 import net.tuchnyak.repository.CvRepository;
 import net.tuchnyak.repository.CvRepositoryImpl;
 import net.tuchnyak.repository.PostRepositoryImpl;
+import net.tuchnyak.router.BlogRouter;
 import net.tuchnyak.router.CvRouter;
 import net.tuchnyak.router.ProjectRouter;
 import net.tuchnyak.service.PostUploadService;
@@ -32,8 +33,9 @@ public class PersonalHubSite extends Site implements Logging {
     public void setup() {
         get("/", new IndexElement(postService));
 
-        var cvRouter = group("/cv", new CvRouter(cvRepository));
+        group("/cv", new CvRouter(cvRepository));
         group("/projects", new ProjectRouter(DataSourceManager.getInstance().getDataSource()));
+        group("/blog", new BlogRouter(postService));
 
         getLogger().info(">>> PersonalHubSite setup completed");
     }
