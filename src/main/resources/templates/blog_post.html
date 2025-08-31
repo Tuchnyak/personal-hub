@@ -1,0 +1,30 @@
+<div class="container page-container">
+    
+    <!--v page_content/-->
+
+    <!--b empty_post_block-->
+    <div class="text-center">
+        <h2>Post Not Found</h2>
+        <p>Sorry, we couldn't find the post you were looking for.</p>
+        <a href="{{v webapp:rootUrl/}}blog" class="btn btn-primary mt-3">Back to Blog</a>
+    </div>
+    <!--/b-->
+
+    <!--b post_block-->
+    <article>
+        <header class="text-center mb-5">
+            <h1><!--v title--><!--/v--></h1>
+            <p class="subtitle">Published on: <span class="highlight"><!--v post_publish_date--><!--/v--></span></p>
+        </header>
+
+        <section class="post-content">
+            <!--v post_content--><!--/v-->
+        </section>
+    </article>
+
+    <div class="text-center mt-5">
+        <a href="{{v webapp:rootUrl/}}blog">[&larr; Back to all posts]</a>
+    </div>
+    <!--/b-->
+
+</div>

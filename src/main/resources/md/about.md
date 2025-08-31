@@ -23,5 +23,8 @@ Outside of work, my family is my greatest joy. Being a father adds a wonderful d
 
 Thank you for stopping by! Feel free to explore and connect.
 
+```
+---
 Happy coding!
 George.
+```

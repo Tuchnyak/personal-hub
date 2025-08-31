@@ -1,6 +1,7 @@
 package net.tuchnyak.router;
 
 import net.tuchnyak.element.BlogIndexElement;
+import net.tuchnyak.element.BlogPostElement;
 import net.tuchnyak.service.PostUploadService;
 import net.tuchnyak.util.Logging;
 import rife.engine.PathInfoHandling;
@@ -30,11 +31,11 @@ public class BlogRouter extends Router implements Logging {
                 PathInfoHandling.MAP(m -> m.p("page_number")),
                 () -> new BlogIndexElement(postService)
         );
-//        get(
-//                "/post",
-//                PathInfoHandling.MAP(m -> m.p("slug")),
-//                () -> new BlogPostElement(postService)
-//        );
+        get(
+                "/post",
+                PathInfoHandling.MAP(m -> m.p("slug")),
+                () -> new BlogPostElement(postService)
+        );
 
         getLogger().info(">>> Blog router setup");
     }
