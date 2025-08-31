@@ -1,36 +1,60 @@
+<!-- personal-hub/src/main/resources/templates/blog_index.html -->
 <div class="container page-container">
-    <H1>Blog posts</H1>
-    <section>
-        <p class="subtitle">Total posts: {{v total_posts}}{{/v}}</p>
-        <!--v list_content/-->
+    <header class="text-center mb-5">
+        <h1>George's Blog</h1>
+        <p class="subtitle">Total published posts: <!--v total_posts--><!--/v--></p>
+    </header>
 
-        <!--b empty_list_block-->
-        <p>No posts yet.</p>
-        <!--/b-->
+    <!--v list_content/-->
 
-        <!--b post_list_item-->
-        <section>
-            <h3><a href="{{v webapp:rootUrl/}}blog/post{{v post_slug/}}">{{v post_title/}}</a></h3>
-            <p class="subtitle">published on: {{v post_publish_date/}}</p>
-        </section>
-        <!--/b-->
-    </section>
-    <section>
-        <!--v prev_content--><!--/v-->
-        <div class="highlight"><b><!--v current_page-->1<!--/v--></b></div>
-        <!--v next_content--><!--/v-->
+    <!--b empty_list_block-->
+    <div class="text-center">
+        <p>No posts have been published yet. Check back later! <br/><a href="{{v webapp:rootUrl/}}">[Home]</a></p>
+    </div>
+    <!--/b-->
 
-        <!--b prev_block-->
-        <div>
-            <a href="{{webapp:rootUrl/}}blog/page/{{v first_page_number/}}">first page</a>..
-            <a href="{{webapp:rootUrl/}}blog/page/{{v prev_page_number/}}">{{v prev_page_number/}}</a>..
-        </div>
-        <!--/b-->
-        <!--b next_block-->
-        <div>
-            ..<a href="{{webapp:rootUrl/}}blog/page/{{v next_page_number/}}">{{v next_page_number/}}</a>
-            ..<a href="{{webapp:rootUrl/}}blog/page/{{v last_page_number/}}">last page</a>
-        </div>
-        <!--/b-->
-    </section>
+    <!--b post_list_item-->
+    <div class="post-item mb-4 pb-4 border-bottom">
+        <h3 class="mb-1">
+            <a href="{{v webapp:rootUrl/}}blog/post<!--v post_slug/-->"><!--v post_title/--></a>
+        </h3>
+        <p class="text-muted small mb-0">Published on: <span class="highlight"><!--v post_publish_date/--></span></p>
+    </div>
+    <!--/b-->
+
+    <nav aria-label="Page navigation" class="mt-5">
+        <ul class="pagination justify-content-center">
+            <!--v prev_content/-->
+            <li class="page-item active" aria-current="page">
+                <span class="page-link"><!--v current_page--><!--/v--></span>
+            </li>
+            <!--v next_content/-->
+        </ul>
+    </nav>
+
+    <!--b prev_block-->
+    <li class="page-item">
+        <a class="page-link" href="{{v webapp:rootUrl/}}blog/page/<!--v first_page_number/-->" aria-label="First">
+            <span aria-hidden="true">&laquo;&laquo; First</span>
+        </a>
+    </li>
+    <li class="page-item">
+        <a class="page-link" href="{{v webapp:rootUrl/}}blog/page/<!--v prev_page_number/-->" aria-label="Previous">
+            <span aria-hidden="true">&laquo; Previous</span>
+        </a>
+    </li>
+    <!--/b-->
+
+    <!--b next_block-->
+    <li class="page-item">
+        <a class="page-link" href="{{v webapp:rootUrl/}}blog/page/<!--v next_page_number/-->" aria-label="Next">
+            <span aria-hidden="true">Next &raquo;</span>
+        </a>
+    </li>
+    <li class="page-item">
+        <a class="page-link" href="{{v webapp:rootUrl/}}blog/page/<!--v last_page_number/-->" aria-label="Last">
+            <span aria-hidden="true">Last &raquo;&raquo;</span>
+        </a>
+    </li>
+    <!--/b-->
 </div>

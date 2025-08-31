@@ -70,7 +70,7 @@ public class BlogIndexElement implements Element, Logging {
         if (page.hasPrevious()) {
             blogIndexTemplate.setBlock("prev_content", "prev_block");
             blogIndexTemplate.setValue("prev_page_number", page.currentPage() - ONE);
-            blogIndexTemplate.setValue("firest_page_number", ONE);
+            blogIndexTemplate.setValue("first_page_number", ONE);
         }
         if (page.hasNext()) {
             blogIndexTemplate.setBlock("next_content", "next_block");
