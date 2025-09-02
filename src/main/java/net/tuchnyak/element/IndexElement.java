@@ -1,19 +1,20 @@
-package net.tuchnyak.element;/**
- * @author tuchnyak (George Shchennikov)
- */
+package net.tuchnyak.element;
 
 import net.tuchnyak.exception.post.PostNotFoundException;
 import net.tuchnyak.service.PostUploadService;
-import net.tuchnyak.util.Logging;
 import rife.engine.*;
 
 import static net.tuchnyak.service.PostUploadServiceImpl.ABOUT_SLUG;
 
-public class IndexElement implements Element, Logging {
+/**
+ * @author tuchnyak (George Shchennikov)
+ */
+public class IndexElement extends AbstractLayoutElement {
 
     private final PostUploadService postService;
 
     public IndexElement(PostUploadService postService) {
+        super("index_include");
         this.postService = postService;
     }
 
@@ -30,9 +31,8 @@ public class IndexElement implements Element, Logging {
             body = "<p>Something gone wrong! Sorry!</p>";
         }
 
-        var indexTemplate = c.template("layout");
-        indexTemplate.setBlock("main_content", "index_include");
-        indexTemplate.setValue("title", title);
+        var indexTemplate = getLayoutTemplate(c);
+        setTitle(title);
         indexTemplate.setValue("content_body", body);
 
         c.print(indexTemplate);

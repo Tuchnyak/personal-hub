@@ -2,22 +2,21 @@ package net.tuchnyak.element;
 
 import net.tuchnyak.service.CvService;
 import net.tuchnyak.service.CvServiceImpl;
-import net.tuchnyak.util.Logging;
 import rife.engine.*;
 
-public class CvElement implements Element, Logging {
+public class CvElement extends AbstractLayoutElement {
 
     private final CvService cvService;
 
     public CvElement(CvServiceImpl cvService) {
+        super("cv_include");
         this.cvService = cvService;
     }
 
     public void process(Context c) {
-        var cvTemplate = c.template("layout");
-        cvTemplate.setBlock("main_content", "cv_include");
-        cvTemplate.setBlock("custom_css", "css_cv");
-        cvTemplate.setValue("title", "Georgii Shchennikov - CV");
+        var cvTemplate = getLayoutTemplate(c);
+        setCustomCss("css_cv");
+        setTitle("George's - CV");
 
         cvService.processContactInfo(cvTemplate);
         cvService.processSkills(cvTemplate);

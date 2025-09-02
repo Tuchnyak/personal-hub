@@ -2,26 +2,25 @@ package net.tuchnyak.element;
 
 import net.tuchnyak.service.ProjectServiceImpl;
 import rife.engine.Context;
-import rife.engine.Element;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author tuchnyak (George Shchennikov)
  */
-public class ProjectElement implements Element {
+public class ProjectElement extends AbstractLayoutElement {
 
     private final ProjectServiceImpl projectService;
 
     public ProjectElement(ProjectServiceImpl projectService) {
+        super("projects_include");
         this.projectService = projectService;
     }
 
     public void process(Context c) {
-        var projectTemplate = c.template("layout");
-        projectTemplate.setBlock("main_content", "projects_include");
-        projectTemplate.setBlock("custom_css", "css_projects");
-        projectTemplate.setValue("title", "Georgii Shchennikov - Projects");
+        var projectTemplate = getLayoutTemplate(c);
+        setCustomCss("css_projects");
+        setTitle("George's - Projects");
 
         projectService.getAllProjectsWithImages()
                 .forEach(projectDto -> {

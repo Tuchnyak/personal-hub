@@ -5,21 +5,20 @@ import net.tuchnyak.dto.PostListItem;
 import net.tuchnyak.exception.post.PostNotFoundException;
 import net.tuchnyak.service.PostUploadService;
 import net.tuchnyak.util.BlockAppendHandler;
-import net.tuchnyak.util.Logging;
 import rife.engine.Context;
-import rife.engine.Element;
 import rife.template.Template;
 
 /**
  * @author tuchnyak (George Shchennikov)
  */
-public class BlogIndexElement implements Element, Logging {
+public class BlogIndexElement extends AbstractLayoutElement {
     public static final int ONE = 1;
     private static final int PAGE_SIZE = 10;
 
     private final PostUploadService postService;
 
     public BlogIndexElement(PostUploadService postService) {
+        super("blog_index_include");
         this.postService = postService;
     }
 
@@ -28,9 +27,9 @@ public class BlogIndexElement implements Element, Logging {
         int pageNumber = getPageNumber(c);
         Page<PostListItem> page = getPostListItemPage(pageNumber);
 
-        var blogIndexTemplate = c.template("layout");
-        blogIndexTemplate.setBlock("main_content", "blog_index_include");
-        blogIndexTemplate.setValue("title", "George's BLog");
+        var blogIndexTemplate = getLayoutTemplate(c);
+        String title = "George's - BLog";
+        setTitle(title);
 
         if (page.items().isEmpty()) {
             blogIndexTemplate.setBlock("list_content", "empty_list_block");
@@ -49,6 +48,7 @@ public class BlogIndexElement implements Element, Logging {
         );
         blogIndexTemplate.setValue("total_posts", page.totalItems());
         blogIndexTemplate.setValue("current_page", page.currentPage());
+        setTitle(title + " (%S)".formatted(page.currentPage()));
 
         handlePrevAndNextBlocks(page, blogIndexTemplate);
 
