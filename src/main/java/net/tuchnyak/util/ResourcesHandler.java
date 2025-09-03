@@ -1,7 +1,6 @@
 package net.tuchnyak.util;
 
 import rife.resources.ResourceFinderDirectories;
-import rife.resources.exceptions.ResourceFinderErrorException;
 
 import java.io.File;
 import java.nio.charset.Charset;
