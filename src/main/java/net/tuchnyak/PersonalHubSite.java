@@ -1,6 +1,7 @@
 package net.tuchnyak;
 
 import net.tuchnyak.auth.AuthDbInitializer;
+import net.tuchnyak.auth.CredsHolder;
 import net.tuchnyak.config.AppConfigurations;
 import net.tuchnyak.db.DataSourceManager;
 import net.tuchnyak.db.DbInitializer;
@@ -20,15 +21,19 @@ import rife.config.RifeConfig;
 import rife.database.Datasource;
 import rife.engine.*;
 import rife.ioc.HierarchicalProperties;
+import rife.tools.StringEncryptor;
+
+import java.util.Optional;
 
 public class PersonalHubSite extends Site implements Logging {
 
     private final CvRepository cvRepository;
     private final PostUploadService postService;
+    private final CredsHolder credsHolder;
 
     private AppConfigurations appConfigurations;
 
-    public PersonalHubSite() {
+    public PersonalHubSite(Optional<String> newCredentials) {
         new DbInitializer().initialize();
         var dataSource = DataSourceManager.getInstance().getDataSource();
         new MigrationImplementer(
@@ -37,12 +42,13 @@ public class PersonalHubSite extends Site implements Logging {
         ).implementMigrations();
         cvRepository = new CvRepositoryImpl(dataSource);
         postService = new PostUploadServiceImpl(new PostRepositoryImpl(dataSource));
+        this.credsHolder = new CredsHolder(newCredentials);
         getLogger().info(">>> PersonalHubSite initialized");
     }
 
     public void setup() {
         setupConfiguration(properties());
-        setupAuthDb(DataSourceManager.getInstance().getDataSource(), appConfigurations);
+        setupAuthDb(DataSourceManager.getInstance().getDataSource(), appConfigurations, credsHolder);
 
         get("/", new IndexElement(postService));
 
@@ -66,17 +72,26 @@ public class PersonalHubSite extends Site implements Logging {
         rifeAuthProps.setTableRemember(appConfigurations.authProperties().tableRemember());
     }
 
-    private void setupAuthDb(Datasource dataSource, AppConfigurations appConfigurations) {
+    private void setupAuthDb(Datasource dataSource, AppConfigurations appConfigurations, CredsHolder credsHolder) {
         var dbUsers = DatabaseUsersFactory.instance(dataSource);
+        dbUsers.setPasswordEncryptor(StringEncryptor.DRUPAL);
+
         var aDbI = new AuthDbInitializer(dataSource, appConfigurations, dbUsers);
         aDbI.init();
+        aDbI.addUser(credsHolder);
     }
 
 
     /////////////////////////////////
     public static void main(String[] args) {
+        Optional<String> creds;
+        if (args.length == 2) {
+            creds = Optional.of(args[0] + ":" + args[1]);
+        } else {
+            creds = Optional.empty();
+        }
         new Server()
                 .staticResourceBase("src/main/webapp")
-                .start(new PersonalHubSite());
+                .start(new PersonalHubSite(creds));
     }
 }

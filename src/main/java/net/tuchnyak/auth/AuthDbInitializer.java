@@ -3,6 +3,7 @@ package net.tuchnyak.auth;
 import net.tuchnyak.config.AppConfigurations;
 import net.tuchnyak.util.Logging;
 import rife.authentication.credentialsmanagers.DatabaseUsers;
+import rife.authentication.credentialsmanagers.RoleUserAttributes;
 import rife.database.Datasource;
 import rife.database.queries.Select;
 
@@ -10,6 +11,8 @@ import rife.database.queries.Select;
  * @author tuchnyak (George Shchennikov)
  */
 public class AuthDbInitializer implements Logging {
+
+    public static final String ADMIN = "admin";
 
     private final Datasource dataSource;
     private final AppConfigurations appConfigurations;
@@ -40,6 +43,8 @@ public class AuthDbInitializer implements Logging {
         } catch (Exception e) {
             getLogger().error(">>> Auth DB structure initialization failed", e);
         }
+
+        addAdminRole();
     }
 
     private void initNewAuthStructure(boolean isAuthAlreadyInitialized) {
@@ -55,6 +60,23 @@ public class AuthDbInitializer implements Logging {
             });
             getLogger().info(">>> Auth DB structure initialization completed");
         }
+    }
+
+    private void addAdminRole() {
+        try {
+            if (!dbUsers.containsRole(ADMIN)) {
+                dbUsers.addRole(ADMIN);
+            }
+        } catch (Exception e) {
+            getLogger().error(">>> Admin role initialization failed", e);
+        }
+    }
+
+    public void addUser(CredsHolder credsHolder) {
+        credsHolder.ifPresent(creds -> {
+            dbUsers.addUser(creds.getUserName(), new RoleUserAttributes(creds.getPassword()).role(ADMIN));
+            creds.dropCreds();
+        });
     }
 
 }

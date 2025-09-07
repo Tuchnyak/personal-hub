@@ -2,9 +2,11 @@ package net.tuchnyak;
 
 import rife.engine.Server;
 
+import java.util.Optional;
+
 public class PersonalHubSiteUber extends PersonalHubSite {
     public PersonalHubSiteUber() {
-        super();
+        super(Optional.empty());
     }
 
     public static void main(String[] args) {
