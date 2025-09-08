@@ -16,6 +16,7 @@ import net.tuchnyak.router.ProjectRouter;
 import net.tuchnyak.service.PostUploadService;
 import net.tuchnyak.service.PostUploadServiceImpl;
 import net.tuchnyak.util.Logging;
+import rife.authentication.credentialsmanagers.DatabaseUsers;
 import rife.authentication.credentialsmanagers.DatabaseUsersFactory;
 import rife.config.RifeConfig;
 import rife.database.Datasource;
@@ -27,11 +28,14 @@ import java.util.Optional;
 
 public class PersonalHubSite extends Site implements Logging {
 
+    public static final StringEncryptor DRUPAL_PASSWORD_ENCRYPTOR = StringEncryptor.DRUPAL;
+
     private final CvRepository cvRepository;
     private final PostUploadService postService;
     private final CredsHolder credsHolder;
 
     private AppConfigurations appConfigurations;
+    private DatabaseUsers dbUsers;
 
     public PersonalHubSite(Optional<String> newCredentials) {
         new DbInitializer().initialize();
@@ -73,8 +77,8 @@ public class PersonalHubSite extends Site implements Logging {
     }
 
     private void setupAuthDb(Datasource dataSource, AppConfigurations appConfigurations, CredsHolder credsHolder) {
-        var dbUsers = DatabaseUsersFactory.instance(dataSource);
-        dbUsers.setPasswordEncryptor(StringEncryptor.DRUPAL);
+        dbUsers = DatabaseUsersFactory.instance(dataSource);
+        dbUsers.setPasswordEncryptor(DRUPAL_PASSWORD_ENCRYPTOR);
 
         var aDbI = new AuthDbInitializer(dataSource, appConfigurations, dbUsers);
         aDbI.init();
