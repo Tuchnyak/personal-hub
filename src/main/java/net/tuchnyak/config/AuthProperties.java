@@ -12,7 +12,11 @@ public record AuthProperties(
         String tableRole,
         String tableUserRole,
         String tableAuthentication,
-        String tableRemember
+        String tableRemember,
+        int durationMinutes,
+        String endpointAdmin,
+        String endpointLogin,
+        String endpointLogout
 ) {
 
     public static final String DOT = ".";
@@ -25,7 +29,11 @@ public record AuthProperties(
                 properties.getValueString("auth.schema") + DOT + properties.getValueString("auth.table.role"),
                 properties.getValueString("auth.schema") + DOT + properties.getValueString("auth.table.user_role"),
                 properties.getValueString("auth.schema") + DOT + properties.getValueString("auth.table.authentication"),
-                properties.getValueString("auth.schema") + DOT + properties.getValueString("auth.table.remember")
+                properties.getValueString("auth.schema") + DOT + properties.getValueString("auth.table.remember"),
+                Integer.parseInt(properties.getValueString("auth.session.duration_minutes", String.valueOf(30))),
+                properties.getValueString("auth.web.endpoint.admin"),
+                properties.getValueString("auth.web.endpoint.login"),
+                properties.getValueString("auth.web.endpoint.logout")
         );
     }
 }

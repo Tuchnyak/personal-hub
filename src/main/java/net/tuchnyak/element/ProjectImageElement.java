@@ -1,6 +1,6 @@
 package net.tuchnyak.element;
 
-import net.tuchnyak.service.ProjectServiceImpl;
+import net.tuchnyak.service.ProjectService;
 import rife.engine.Context;
 import rife.engine.Element;
 
@@ -9,9 +9,9 @@ import rife.engine.Element;
  */
 public class ProjectImageElement implements Element {
 
-    private final ProjectServiceImpl projectService;
+    private final ProjectService projectService;
 
-    public ProjectImageElement(ProjectServiceImpl projectService) {
+    public ProjectImageElement(ProjectService projectService) {
         this.projectService = projectService;
     }
 

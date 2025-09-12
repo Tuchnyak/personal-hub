@@ -1,12 +1,14 @@
 package net.tuchnyak.auth;
 
+import net.tuchnyak.util.Logging;
+
 import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
  * @author tuchnyak (George Shchennikov)
  */
-public class CredsHolder {
+public class CredsHolder implements Logging {
 
     private Optional<String> creds = Optional.empty();
 
@@ -16,6 +18,7 @@ public class CredsHolder {
 
     public void dropCreds() {
         creds = Optional.empty();
+        getLogger().info(">>> Credentials dropped");
     }
 
     public String getUserName() {

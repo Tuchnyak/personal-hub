@@ -1,6 +1,6 @@
 package net.tuchnyak.element;
 
-import net.tuchnyak.service.ProjectServiceImpl;
+import net.tuchnyak.service.ProjectService;
 import rife.engine.Context;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -10,9 +10,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class ProjectElement extends AbstractLayoutElement {
 
-    private final ProjectServiceImpl projectService;
+    private final ProjectService projectService;
 
-    public ProjectElement(ProjectServiceImpl projectService) {
+    public ProjectElement(ProjectService projectService) {
         super("projects_include");
         this.projectService = projectService;
     }

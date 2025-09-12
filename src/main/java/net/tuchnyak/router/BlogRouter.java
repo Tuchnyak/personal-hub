@@ -5,27 +5,22 @@ import net.tuchnyak.element.BlogPostElement;
 import net.tuchnyak.service.PostUploadService;
 import net.tuchnyak.util.Logging;
 import rife.engine.PathInfoHandling;
-import rife.engine.Router;
 
 /**
  * @author tuchnyak (George Shchennikov)
  */
-public class BlogRouter extends Router implements Logging {
+public class BlogRouter extends AbstractRouter implements Logging {
 
     private final PostUploadService postService;
 
     public BlogRouter(PostUploadService postService) {
+        super(new BlogIndexElement(postService));
         this.postService = postService;
     }
 
     @Override
     public void setup() {
-        var rootBlogRoute = get(
-                "/",
-                PathInfoHandling.NONE,
-                () -> new BlogIndexElement(postService)
-        );
-        get("", c -> c.redirect(rootBlogRoute));
+        super.setup();
         get(
                 "/page",
                 PathInfoHandling.MAP(m -> m.p("page_number")),
