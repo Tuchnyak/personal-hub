@@ -1,2 +1,67 @@
-<h1>Admin index</h1>
-<p>Hello, Admin!</p>
+<!-- personal-hub/src/main/resources/templates/admin/admin_index.html -->
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Admin Panel</h1>
+        <a href="#" class="btn btn-primary">Upload New Post</a>
+    </div>
+
+    <hr>
+
+    <h2 class="mt-4">Drafts</h2>
+    <!--v draft_content/-->
+
+    <h2 class="mt-5">Published</h2>
+    <!--v published_content/-->
+
+
+    <!-- Block for an empty list -->
+    <!--b empty_list_block-->
+    <div class="text-center text-muted mt-3">
+        <p>--- Nothing here yet. ---</p>
+    </div>
+    <!--/b-->
+
+    <!-- Block for a single draft item -->
+    <!--b draft_item_block-->
+    <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <h5 class="mb-1"><!--v draft_title/--></h5>
+            <small class="text-muted"><a href="{{v webapp:rootUrl/}}blog/post<!--v draft_slug/-->"><!--v draft_slug/--></a></small>
+        </div>
+        <div>
+            <form action="{{v route:action:/}}" method="post" class="d-inline">
+                <input type="hidden" name="postId" value="{{v draft_id/}}">
+                <input type="hidden" name="actionType" value="PUBLISH">
+                <button type="submit" class="btn btn-sm btn-success">Publish</button>
+            </form>
+            <a href="#" class="btn btn-sm btn-secondary">Upload New Version</a>
+            <form action="{{v route:action:/}}" method="post" class="d-inline">
+                <input type="hidden" name="postId" value="{{v draft_id/}}">
+                <input type="hidden" name="actionType" value="DELETE">
+                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this draft?');">Delete</button>
+            </form>
+        </div>
+    </div>
+    <!--/b-->
+
+    <!-- Block for a single published post item -->
+    <!--b post_item_block-->
+    <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <h5 class="mb-1"><!--v post_title/--></h5>
+            <small class="text-muted"><a href="{{v webapp:rootUrl/}}blog/post<!--v post_slug/-->"><!--v post_slug/--></a></small>
+            <br>
+            <small class="text-muted">Published on: <!--v post_pub_date/--></small>
+        </div>
+        <div>
+            <form action="{{v route:action:/}}" method="post" class="d-inline">
+                <input type="hidden" name="postId" value="{{v post_id/}}">
+                <input type="hidden" name="actionType" value="UNPUBLISH">
+                <button type="submit" class="btn btn-sm btn-warning">Unpublish</button>
+            </form>
+            <a href="#" class="btn btn-sm btn-secondary">Upload New Version</a>
+        </div>
+    </div>
+    <!--/b-->
+
+</div>

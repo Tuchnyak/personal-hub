@@ -1,7 +1,6 @@
 package net.tuchnyak.repository;
 
 import net.tuchnyak.db.Transactional;
-import net.tuchnyak.dto.Page;
 import net.tuchnyak.dto.PostListItem;
 import net.tuchnyak.model.blog.Post;
 import rife.database.Datasource;
@@ -106,7 +105,21 @@ public class PostRepositoryImpl implements PostRepository, Transactional {
                 .fieldsExcluded(Post.class, "content_html")
                 .from(BLOG_POSTS_TABLE);
 
-        return dbQueryManager.executeFetchAllBeans(selection, Post.class);
+        var ret = new ArrayList<Post>();
+        var isFound = dbQueryManager.executeFetchAll(selection, rs -> {
+            ret.add(Post.builder()
+                    .withId(UUID.fromString(rs.getString("id")))
+                    .withTitle(rs.getString("title"))
+                    .withSlug(rs.getString("slug"))
+                    .withPublishedAt(rs.getTimestamp("published_at"))
+                    .withIsPublished(rs.getBoolean("is_published"))
+                    .withCreatedAt(rs.getTimestamp("created_at"))
+                    .withUpdatedAt(rs.getTimestamp("updated_at"))
+                    .build()
+            );
+        });
+
+        return isFound ? ret : Collections.emptyList();
     }
 
     @Override

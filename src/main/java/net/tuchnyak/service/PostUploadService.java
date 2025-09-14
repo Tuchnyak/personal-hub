@@ -4,6 +4,7 @@ import net.tuchnyak.dto.Page;
 import net.tuchnyak.dto.PostListItem;
 import net.tuchnyak.model.blog.Post;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -17,8 +18,14 @@ public interface PostUploadService {
 
     void publishPost(UUID postId);
 
+    void unpublishPost(UUID postId);
+
     Post getBySlug(String slug);
 
     Page<PostListItem> getPublishedPostListPaginated(int page, int pageSize);
+
+    List<PostListItem> getAllPostsItems();
+
+    int deletePost(UUID postId);
 
 }

@@ -17,7 +17,6 @@ import net.tuchnyak.uuid.UuidGeneratorFactory;
 import rife.database.DbQueryManager;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 /**
  * @author tuchnyak (George Shchennikov)
@@ -102,6 +101,7 @@ public class PostUploadServiceImpl implements PostUploadService, Logging {
 
     @Override
     public void publishPost(UUID postId) {
+        getLogger().info(">>> Publishing post with ID: {}...", postId);
         try {
             dbManager.inTransaction(() -> {
                 var post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(postId));
@@ -117,6 +117,28 @@ public class PostUploadServiceImpl implements PostUploadService, Logging {
             getLogger().error(">>> Error publishing Post with id '{}'", postId);
             throw new PostPublishException(postId, e);
         }
+        getLogger().info(">>> Post with ID: {} has been published", postId);
+    }
+
+    @Override
+    public void unpublishPost(UUID postId) {
+        getLogger().info(">>> Unpublishing post with ID: {}...", postId);
+        try {
+            dbManager.inTransaction(() -> {
+                var post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(postId));
+
+                post.setIs_published(false);
+                var nowTimestamp = new TimestampSqlNow();
+                post.setPublished_at(null);
+                post.setUpdated_at(nowTimestamp.now());
+
+                postRepository.update(post);
+            });
+        } catch (Exception e) {
+            getLogger().error(">>> Error unpublishing Post with id '{}'", postId);
+            throw new PostUnpublishException(postId, e);
+        }
+        getLogger().info(">>> Post with ID: {} has been unpublished", postId);
     }
 
     @Override
@@ -143,6 +165,26 @@ public class PostUploadServiceImpl implements PostUploadService, Logging {
                 page < totalPages,
                 page > 1
         );
+    }
+
+    @Override
+    public List<PostListItem> getAllPostsItems() {
+
+        return postRepository.findAllWithoutContent().stream()
+                .map(post -> new PostListItem(
+                        post.getId().toString(),
+                        post.getTitle(),
+                        post.isIs_published() ? post.getPublished_at().toLocalDateTime().toLocalDate() : null,
+                        post.getSlug()
+                ))
+                .toList();
+    }
+
+    @Override
+    public int deletePost(UUID postId) {
+        getLogger().info(">>> Post with ID {} will be deleted", postId);
+
+        return postRepository.deleteById(postId);
     }
 
 

@@ -80,7 +80,7 @@ public class PersonalHubSite extends Site implements Logging {
 
         var login = getPost(appConfigurations.authProperties().endpointLogin(), new Login(authConfig, TemplateFactory.HTML.get("auth/login")));
         get(appConfigurations.authProperties().endpointLogout(), new Logout(authConfig, TemplateFactory.HTML.get("auth/logout")));
-        AdminRouter adminRouter = new AdminRouter(appConfigurations, authConfig);
+        AdminRouter adminRouter = new AdminRouter(authConfig, postService, dbUsers, databaseSessions);
         group(appConfigurations.authProperties().endpointAdmin(), adminRouter);
         authConfig
                 .loginRoute(login)
