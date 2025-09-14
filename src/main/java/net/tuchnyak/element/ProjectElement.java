@@ -18,7 +18,7 @@ public class ProjectElement extends AbstractLayoutElement {
     }
 
     public void process(Context c) {
-        var projectTemplate = getLayoutTemplate(c);
+        var projectTemplate = activateLayoutTemplate(c);
         setCustomCss("css_projects");
         setTitle("George's - Projects");
 

@@ -27,7 +27,7 @@ public class BlogIndexElement extends AbstractLayoutElement {
         int pageNumber = getPageNumber(c);
         Page<PostListItem> page = getPostListItemPage(pageNumber);
 
-        var blogIndexTemplate = getLayoutTemplate(c);
+        var blogIndexTemplate = activateLayoutTemplate(c);
         String title = "George's - BLog";
         setTitle(title);
 

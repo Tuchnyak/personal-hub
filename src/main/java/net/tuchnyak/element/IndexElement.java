@@ -31,7 +31,7 @@ public class IndexElement extends AbstractLayoutElement {
             body = "<p>Something gone wrong! Sorry!</p>";
         }
 
-        var indexTemplate = getLayoutTemplate(c);
+        var indexTemplate = activateLayoutTemplate(c);
         setTitle(title);
         indexTemplate.setValue("content_body", body);
 

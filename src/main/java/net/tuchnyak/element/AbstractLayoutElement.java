@@ -27,7 +27,7 @@ public abstract class AbstractLayoutElement implements Element, Logging {
         template.setBlock("custom_css", cssBlockName);
     }
 
-    Template getLayoutTemplate(Context c) {
+    Template activateLayoutTemplate(Context c) {
         template = c.template(LAYOUT_TEMPLATE_NAME);
         template.setBlock("main_content", includeBlockName);
 

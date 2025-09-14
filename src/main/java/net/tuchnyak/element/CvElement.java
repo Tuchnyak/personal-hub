@@ -14,7 +14,7 @@ public class CvElement extends AbstractLayoutElement {
     }
 
     public void process(Context c) {
-        var cvTemplate = getLayoutTemplate(c);
+        var cvTemplate = activateLayoutTemplate(c);
         setCustomCss("css_cv");
         setTitle("George's - CV");
 

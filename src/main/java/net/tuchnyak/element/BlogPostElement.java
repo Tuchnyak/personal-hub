@@ -20,7 +20,7 @@ public class BlogPostElement extends AbstractLayoutElement {
     public void process(Context c) throws Exception {
         String slug = "/" + c.parameter("slug", "");
 
-        var postTemplate = getLayoutTemplate(c);
+        var postTemplate = activateLayoutTemplate(c);
         var title = "Post not found: " + slug;
 
         try {
