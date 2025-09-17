@@ -45,28 +45,25 @@ public class PostUploadServiceImpl implements PostUploadService, Logging {
         this.dbManager = ((Transactional) postRepository).getDbQueryManager();
     }
 
-    @Override
-    public Post uploadPost(String rawPostContent) {
-        if (rawPostContent == null || rawPostContent.trim().isBlank()) {
-            throw new PostIsEmptyException();
-        }
+    public Post uploadOrUpdateOrThrow(String rawPostContent, boolean throwException) {
         ParsedInfo parsedInfo = parseRawContent(rawPostContent);
 
         String slug = parsedInfo.getSlug();
+        var postToSave = convertParsedInfoToPost(parsedInfo);
+
         if (postRepository.existsBySlug(slug)) {
-            throw new PostWithSlugAlreadyExistsException(slug);
+            if (throwException)
+                throw new PostWithSlugAlreadyExistsException(slug);     //TODO: replace existing or reformat uploadByReplace
+
+            return dbManager.inTransaction(() -> {
+                var dbPost = postRepository.findBySlug(slug).orElseThrow();
+                dbPost.setTitle(postToSave.getTitle());
+                dbPost.setContent_html(postToSave.getContent_html());
+                dbPost.setUpdated_at(postToSave.getUpdated_at());
+                postRepository.update(dbPost);
+                return dbPost;
+            });
         }
-        var nowTimestamp = new TimestampSqlNow();
-        var id = idGenerator.generate();
-        var postToSave = Post.builder()
-                .withId(id)
-                .withTitle(parsedInfo.getTitle())
-                .withSlug(slug)
-                .withContentHtml(parsedInfo.outputData().orElseThrow())
-                .withIsPublished(false)
-                .withCreatedAt(nowTimestamp.now())
-                .withUpdatedAt(nowTimestamp.now())
-                .build();
         try {
             postRepository.save(postToSave);
             getLogger().info(">>> Post has been uploaded: {}", postToSave);
@@ -76,6 +73,18 @@ public class PostUploadServiceImpl implements PostUploadService, Logging {
         }
 
         return postToSave;
+    }
+
+    @Override
+    public Post uploadPost(String rawPostContent) {
+
+        return uploadOrUpdateOrThrow(rawPostContent, true);
+    }
+
+    @Override
+    public Post uploadOrUpdate(String rawPostContent) {
+
+        return uploadOrUpdateOrThrow(rawPostContent, false);
     }
 
     @Override
@@ -188,7 +197,25 @@ public class PostUploadServiceImpl implements PostUploadService, Logging {
     }
 
 
+    private Post convertParsedInfoToPost(ParsedInfo parsedInfo) {
+        var nowTimestamp = new TimestampSqlNow();
+        var id = idGenerator.generate();
+
+        return Post.builder()
+                .withId(id)
+                .withTitle(parsedInfo.getTitle())
+                .withSlug(parsedInfo.getSlug())
+                .withContentHtml(parsedInfo.outputData().orElseThrow())
+                .withIsPublished(false)
+                .withCreatedAt(nowTimestamp.now())
+                .withUpdatedAt(nowTimestamp.now())
+                .build();
+    }
+
     private ParsedInfo parseRawContent(String rawPostContent) {
+        if (rawPostContent == null || rawPostContent.trim().isBlank()) {
+            throw new PostIsEmptyException();
+        }
         try {
             ParsedInfo parsedContent = textConverter.convert(rawPostContent);
             parsedContent.yamlDataMap().orElseThrow(PostHeaderIsEmptyException::new);

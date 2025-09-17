@@ -53,6 +53,13 @@ public class AdminRouter extends AbstractRouter implements Logging {
             c.redirect(getRootRoute());
         });
 
+        // TODO: get /upload element to show the form
+        post("/upload", (c) -> {
+            var rawContent = c.parameter("raw_content");
+            postService.uploadOrUpdate(rawContent);
+            c.redirect(getRootRoute());
+        });
+
         getLogger().info(">>> Admin router setup");
     }
 

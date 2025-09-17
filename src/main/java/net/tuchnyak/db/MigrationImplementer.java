@@ -11,8 +11,6 @@ import rife.database.Datasource;
 import rife.database.DbQueryManager;
 import rife.database.queries.Select;
 
-import static net.tuchnyak.service.PostUploadServiceImpl.ABOUT_SLUG;
-
 /**
  * @author tuchnyak (George Shchennikov)
  */
@@ -80,12 +78,15 @@ public class MigrationImplementer implements Logging {
         getLogger().info(">>> Postmigration started");
         var aboutMdContent = resourcesHandler.getFileContent("md/about.md");
         aboutMdContent.ifPresent(rawPost -> {
-            var uuid = postUploadService.uploadByReplace(rawPost, ABOUT_SLUG);
-            if (uuid == null) {
+            var post = postUploadService.uploadOrUpdate(rawPost);
+            if (post == null) {
                 getLogger().warn(">>> About me post not uploaded!");
             } else {
-                getLogger().info(">>> About me post uploaded: {}", uuid);
-                postUploadService.publishPost(uuid);
+                getLogger().info(">>> About me post uploaded: {}", post);
+                if (!post.isIs_published()) {
+                    postUploadService.publishPost(post.getId());
+                    getLogger().info(">>> About me post published");
+                }
             }
         });
         getLogger().info(">>> Postmigration completed");

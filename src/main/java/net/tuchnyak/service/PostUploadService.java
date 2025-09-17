@@ -14,6 +14,8 @@ public interface PostUploadService {
 
     Post uploadPost(String rawPostContent);
 
+    Post uploadOrUpdate(String rawPostContent);
+
     UUID uploadByReplace(String rawPostContent, String slug);
 
     void publishPost(UUID postId);
