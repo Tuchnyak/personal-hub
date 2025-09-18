@@ -53,7 +53,7 @@ public class PostUploadServiceImpl implements PostUploadService, Logging {
 
         if (postRepository.existsBySlug(slug)) {
             if (throwException)
-                throw new PostWithSlugAlreadyExistsException(slug);     //TODO: replace existing or reformat uploadByReplace
+                throw new PostWithSlugAlreadyExistsException(slug);
 
             return dbManager.inTransaction(() -> {
                 var dbPost = postRepository.findBySlug(slug).orElseThrow();
@@ -61,6 +61,7 @@ public class PostUploadServiceImpl implements PostUploadService, Logging {
                 dbPost.setContent_html(postToSave.getContent_html());
                 dbPost.setUpdated_at(postToSave.getUpdated_at());
                 postRepository.update(dbPost);
+                getLogger().info(">>> Post has been updated: {}", dbPost.getSlug());
                 return dbPost;
             });
         }
@@ -151,10 +152,11 @@ public class PostUploadServiceImpl implements PostUploadService, Logging {
     }
 
     @Override
-    public Post getBySlug(String slug) {
+    public Post getBySlug(String slug, boolean isDraftStateOk) {
         var post = postRepository.findBySlug(slug);
 
-        return post.orElseThrow(() -> new PostNotFoundException("Post not fount by slug: %s".formatted(slug)));
+        return post.filter(p -> p.isIs_published() || isDraftStateOk)
+                .orElseThrow(() -> new PostNotFoundException("Post not fount by slug: %s".formatted(slug)));
     }
 
     @Override

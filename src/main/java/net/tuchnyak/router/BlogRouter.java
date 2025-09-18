@@ -29,7 +29,7 @@ public class BlogRouter extends AbstractRouter implements Logging {
         get(
                 "/post",
                 PathInfoHandling.MAP(m -> m.p("slug")),
-                () -> new BlogPostElement(postService)
+                () -> new BlogPostElement(postService, false)
         );
 
         getLogger().info(">>> Blog router setup");

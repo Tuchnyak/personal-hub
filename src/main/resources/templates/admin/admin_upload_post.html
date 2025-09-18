@@ -1,1 +1,51 @@
-Hello upload!
+<!-- personal-hub/src/main/resources/templates/admin/admin_upload_post.html -->
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Upload Post</h1>
+        <a href="{{v webapp:rootUrl/}}admin" class="btn btn-secondary">Back to Admin Panel</a>
+    </div>
+
+    <hr>
+
+    <form action="{{v webapp:rootUrl/}}admin/upload" method="post">
+        <div class="mb-3">
+            <label for="rawContent" class="form-label">Markdown Content</label>
+            <textarea class="form-control" id="rawContent" name="raw_content" rows="20" placeholder="Paste your Markdown content with YAML front matter here...
+
+Example:
+---
+title: Your Post Title
+slug: /your-post-slug
+---
+
+# Your Post Title
+
+Your content starts here..."></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="fileUpload" class="form-label">Or upload a .md file</label>
+            <input class="form-control" type="file" id="fileUpload" accept=".md,.txt">
+        </div>
+
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+    </form>
+</div>
+
+<script>
+document.getElementById('fileUpload').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (!file) {
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const content = e.target.result;
+        document.getElementById('rawContent').value = content;
+    };
+    reader.readAsText(file);
+});
+</script>

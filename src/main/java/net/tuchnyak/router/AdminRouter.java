@@ -2,6 +2,7 @@ package net.tuchnyak.router;
 
 import net.tuchnyak.element.AdminIndexElement;
 import net.tuchnyak.element.AdminUploadElement;
+import net.tuchnyak.element.BlogPostElement;
 import net.tuchnyak.exception.auth.NotAuthenticatedActionException;
 import net.tuchnyak.service.PostUploadService;
 import net.tuchnyak.util.Logging;
@@ -62,6 +63,12 @@ public class AdminRouter extends AbstractRouter implements Logging {
             postService.uploadOrUpdate(rawContent);
             c.redirect(getRootRoute());
         });
+
+        get(
+                "/draft",
+                PathInfoHandling.MAP(m -> m.p("slug")),
+                () -> new BlogPostElement(postService, true)
+        );
 
         getLogger().info(">>> Admin router setup");
     }

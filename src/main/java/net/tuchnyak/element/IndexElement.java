@@ -22,11 +22,11 @@ public class IndexElement extends AbstractLayoutElement {
         String title;
         String body;
         try {
-            var post = postService.getBySlug(ABOUT_SLUG);
+            var post = postService.getBySlug(ABOUT_SLUG, true);
             title = post.getTitle();
             body = post.getContent_html();
         } catch (PostNotFoundException e) {
-            getLogger().warn("Problem during fetching About post data");
+            getLogger().warn("Problem during fetching About post data", e);
             title = "No title";
             body = "<p>Something gone wrong! Sorry!</p>";
         }

@@ -22,7 +22,7 @@ public interface PostUploadService {
 
     void unpublishPost(UUID postId);
 
-    Post getBySlug(String slug);
+    Post getBySlug(String slug, boolean isDraftStateOk);
 
     Page<PostListItem> getPublishedPostListPaginated(int page, int pageSize);
 

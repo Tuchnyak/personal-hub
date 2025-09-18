@@ -7,6 +7,7 @@ import rife.engine.Context;
 import rife.template.Template;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -47,12 +48,15 @@ public class AdminIndexElement extends AbstractLayoutElement {
             template.setBlock("draft_content", "empty_list_block");
         } else {
             var blockAppender = new BlockAppendHandler(template);
-            drafts.forEach(draft -> {
-                template.setValue("draft_title",draft.getTitle());
-                template.setValue("draft_slug",draft.getSlug());
-                template.setValue("draft_id", draft.getId());
-                blockAppender.setOrAppend("draft_content", "draft_item_block");
-            });
+            drafts
+                    .stream()
+                    .sorted((p1, p2) -> p2.getId().compareTo(p1.getId()))
+                    .forEach(draft -> {
+                        template.setValue("draft_title", draft.getTitle());
+                        template.setValue("draft_slug", draft.getSlug());
+                        template.setValue("draft_id", draft.getId());
+                        blockAppender.setOrAppend("draft_content", "draft_item_block");
+                    });
         }
     }
 
@@ -61,13 +65,17 @@ public class AdminIndexElement extends AbstractLayoutElement {
             template.setBlock("published_content", "empty_list_block");
         } else {
             var blockAppender = new BlockAppendHandler(template);
-            published.forEach(post -> {
-                template.setValue("post_title",post.getTitle());
-                template.setValue("post_slug",post.getSlug());
-                template.setValue("post_pub_date", post.getPublished_at());
-                template.setValue("post_id", post.getId());
-                blockAppender.setOrAppend("published_content", "post_item_block");
-            });
+            published
+                    .stream()
+                    .sorted((p1, p2) -> p2.getPublished_at().compareTo(p1.getPublished_at()))
+                    .sorted((p1, p2) -> p2.getId().compareTo(p1.getId()))
+                    .forEach(post -> {
+                        template.setValue("post_title", post.getTitle());
+                        template.setValue("post_slug", post.getSlug());
+                        template.setValue("post_pub_date", post.getPublished_at());
+                        template.setValue("post_id", post.getId());
+                        blockAppender.setOrAppend("published_content", "post_item_block");
+                    });
         }
     }
 
