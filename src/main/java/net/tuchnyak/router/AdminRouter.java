@@ -1,6 +1,7 @@
 package net.tuchnyak.router;
 
 import net.tuchnyak.element.AdminIndexElement;
+import net.tuchnyak.element.AdminUploadElement;
 import net.tuchnyak.exception.auth.NotAuthenticatedActionException;
 import net.tuchnyak.service.PostUploadService;
 import net.tuchnyak.util.Logging;
@@ -9,6 +10,7 @@ import rife.authentication.elements.AuthConfig;
 import rife.authentication.elements.Authenticated;
 import rife.authentication.sessionmanagers.DatabaseSessions;
 import rife.engine.Context;
+import rife.engine.PathInfoHandling;
 
 import java.util.UUID;
 
@@ -53,7 +55,8 @@ public class AdminRouter extends AbstractRouter implements Logging {
             c.redirect(getRootRoute());
         });
 
-        // TODO: get /upload element to show the form
+        get("/upload", PathInfoHandling.NONE, AdminUploadElement::new);
+
         post("/upload", (c) -> {
             var rawContent = c.parameter("raw_content");
             postService.uploadOrUpdate(rawContent);

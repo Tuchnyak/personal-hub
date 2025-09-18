@@ -24,7 +24,7 @@ public class AdminIndexElement extends AbstractLayoutElement {
     @Override
     public void process(Context c) throws Exception {
         var template = activateLayoutTemplate(c);
-        setTitle("Admin index");
+        setTitle("Admin: Index");
 
         List<PostListItem> drafts = new ArrayList<>();
         List<PostListItem> published = new ArrayList<>();
